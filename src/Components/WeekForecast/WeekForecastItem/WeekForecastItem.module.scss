@@ -1,0 +1,100 @@
+.container {
+     width: 100%;
+   //  background-image: url("./../../../../public/assets/CloudsDay.jpg");
+     background-repeat: no-repeat;
+     background-size: 160%;
+     background-position: center;
+}
+
+.content {
+     width: 100%;
+     background-color: rgba(1, 1, 1, 0.4);
+     padding: 5vmin;
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+
+     color: aliceblue;
+
+     position: relative;
+}
+
+.dateWrap {
+     width: 100%;
+     margin-bottom: 50vmin;
+}
+
+.date {
+     font-size: 7vmin;
+}
+
+.currentWeather {
+     font-size: 4vmin;
+}
+
+.weatherDataWrap {
+     width: 100%;
+
+     .cutrentTempWrap {
+          width: 100%;
+          display: flex;
+          justify-content: start;
+          align-items: center;
+
+
+          .iconWrap {
+               display: flex;
+               flex-direction: column;
+               justify-content: center;
+               align-items: center;
+               max-width: 20vmin;
+               margin-right: 5vmin;
+               margin-bottom: 2vmin;
+               .tempIcon {
+                    width: 5vmin;
+                    height: 5vmin;
+               }
+
+               .tempTitle {
+                    font-size: 4vmin;
+                    text-align: center;
+               }
+          }
+
+          .currentTemp {
+               font-size: 5vmin;
+          }
+     } 
+     
+     
+     .hourTempWrap {
+          // width: 100%;
+          display: grid;
+          grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr;
+          gap: 1vmin;
+          margin-bottom: 1.5vmin;
+
+          div {
+               color: aliceblue;
+               font-size: 6vmin;
+          }
+
+          span {
+               font-size: 3vmin;
+          }
+
+          .weatherImg {
+               width: 8vmin;
+               height: 8vmin;
+          }
+     }
+}
+
+.iconWatermark {
+     position: absolute;
+     bottom: 1vmin;
+     right: 2vmin;
+     font-size: 3vmin;
+
+}
+

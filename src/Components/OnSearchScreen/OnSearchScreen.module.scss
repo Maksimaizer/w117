@@ -1,0 +1,66 @@
+.container {
+     width: 100%;
+     height: 100%;
+     position: absolute;
+     top: 0;
+     left: 0;
+     background-color: rgba(0, 0, 0, 0.5);
+     z-index: 100;
+     animation: smoothAppear 0.3s ease;
+   //  transition: all 0.3s ease;
+}
+
+.content {
+     width: 100%;
+     height: 100%;
+
+     padding: 5vmin;
+}
+
+.formWrap{
+     width: 100%;
+     background-color: white;
+     display: flex;
+     padding: 1.5vmin;
+     border-radius: 4vmin;
+
+     .backBtn {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 0 0.5vmin 0 0.5vmin;
+          margin-right: 2vmin;
+
+
+          .backBtnImg {
+               width: 5vmin;
+               height: 5vmin;
+          }
+     }
+
+     .myForm {
+          width: 80%;
+          margin-left: 1vmin;
+          background-color: black;
+
+          .myInput {
+               width: 100%;
+               height: 100%;
+               color: gray;
+               font-size: 5vmin;
+               border: none;
+          }
+          .myInput:focus {
+               outline: none;
+          }
+     }
+     
+}
+
+@keyframes smoothAppear {
+     0% {opacity: 0;};
+     100% {opacity: 1;}
+}
+
+
+

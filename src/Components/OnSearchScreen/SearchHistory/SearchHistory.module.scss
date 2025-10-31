@@ -1,0 +1,36 @@
+.container, .content {
+     width: 100%;
+}
+
+.container {
+     padding-top: 5vmin;
+}
+
+
+.headerWrap {
+     width: 100%;
+     padding: 0.5vmin;
+     display: flex;
+     margin-left: 2.5vmin;
+
+     .headerImg {
+          width: 5vmin;
+          height: 5vmin;
+          margin-right: 3vmin;
+     }
+
+     .headerText{ 
+          color: aliceblue;
+          font-size: 5vmin;
+     }
+}
+
+.searchHistoryWrap {
+     width: 100%;
+     background-color: darkslategray;
+     border-radius: 3vmin;
+     // padding: 2vmin;
+     // padding-left: 3vmin;
+     margin-top: 3vmin;
+
+}

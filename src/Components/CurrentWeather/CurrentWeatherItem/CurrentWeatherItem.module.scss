@@ -1,0 +1,27 @@
+.wrap {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+}
+
+.itemIcon {
+     width: 7vmin;
+     height: 7vmin;
+}
+
+.myLabel {
+     color: lightgrey;
+     font-size: 3vmin;
+     margin-top: 1vmin;
+     margin-bottom: 1vmin;
+}
+
+.valueData {
+     font-size: 6vmin;
+     color: aliceblue;
+
+     span {
+          font-size: 4vmin;
+     }
+}

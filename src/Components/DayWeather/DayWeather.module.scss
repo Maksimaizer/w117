@@ -1,0 +1,56 @@
+.container, .conent {
+     width: 100%;
+     background-color: black;
+     padding: 2vmin;
+     padding-left: 0;
+}
+
+.tempAndDataWrap {
+     width: 100%;
+     display: flex;
+     justify-content: space-between;
+     align-items: end;
+     padding-bottom: 1vmin;
+}
+
+.tempWrap {
+     display: flex;
+}
+
+.tempMax, .tempMin {
+     color: aliceblue;
+     font-size: 7vmin;
+
+     span {
+          font-size: 3vmin;
+          color: gray;
+          margin-right: 1vmin;
+     }
+}
+
+.dateWrap {
+     .currentDate{
+          padding-bottom: 0.5vmin;
+          font-size: 3.5vmin;
+          color: gray;
+     }
+}
+
+.weatherStateWrap {
+     width: 100%;
+     display: flex;
+
+     .weatherStateIcon {
+          width: 8vmin;
+          height: 8vmin;
+          object-fit: cover;
+          padding-bottom: 2vmin;
+       //   background-color: orange;
+     }
+
+     .weatherState {
+          color: aliceblue;
+          font-size: 5vmin;
+       //   margin-left: 1vmin;
+     }
+}

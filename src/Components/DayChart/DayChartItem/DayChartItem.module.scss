@@ -1,0 +1,116 @@
+
+.dayColumnBox {
+     height: 225px;
+     min-width: 80px;
+     // padding: 0 5vmin 0 5vmin;
+     display: flex;
+     justify-content: end;
+     align-items: center;
+     flex-direction: column;
+     position: relative;
+     padding: 1vmin 0 1vmin 0;
+
+     transition: background-color .3s ease;
+    //  background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+.columnContent {
+     height: 100%;
+     min-width: 80px;
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+     align-items: center;
+     transition: all 0.3s ease;
+     animation: smoothAppearance .3s ease backwards;
+   //  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 40%, rgba(255, 255, 255, 0.9) 60%, rgba(255, 255, 255, 0) 100%);
+}
+
+.gradientOnClick {
+     position: absolute;
+     width: 100%;
+     height: 100%;
+     top: 0;
+     left: 0;
+     opacity: 0;
+     transition: opacity 0.3s ease;
+
+     background: linear-gradient(to bottom,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.9) 40%,
+          rgba(255, 255, 255, 0.9) 60%,
+          rgba(255, 255, 255, 0) 100%) 
+}
+
+
+// .dayColumnBox:nth-child {
+//     background-color: rgba(0, 0, 0, 1); 
+// }
+
+.temperature, .chartBar {
+     position: relative;
+     z-index: 2;
+}
+
+.temperature {
+     font-size: 5vmin;
+}
+
+
+.chartBar {
+     // background-color: orange;
+     width: 2vmin;
+     height: 100%;
+     border-radius: 2vmin;
+     margin-top: 2vmin;
+     margin-bottom: 2vmin;
+
+}
+
+.precipitarionWrap {
+     position: absolute;
+     width: 14vmin;
+     height: 100%;
+     bottom: 0;
+     left: 50%;
+     transform: translateX(-50%);
+     animation: smoothAppearance .5s ease backwards;
+     z-index: 1;
+}
+
+.precipitarionBar {
+     position: absolute;
+     bottom: 0;
+     left: 0;
+     width: 14vmin;
+     // height: calc(6.9% + 70%);
+     background-image: linear-gradient(to top, rgba(0, 18, 109, 0.1), rgba(118, 140, 251, 1));
+     z-index: 1;
+}
+
+@keyframes animatedClick {
+     0% {
+         background: linear-gradient(to bottom,
+     rgba(255, 255, 255, 0) 0%,
+     rgba(255, 255, 255, 0) 40%,
+     rgba(255, 255, 255, 0) 60%,
+     rgba(255, 255, 255, 0) 100%)
+}
+
+     100% {
+         background: linear-gradient(to bottom,
+     rgba(255, 255, 255, 0) 0%,
+     rgba(255, 255, 255, 0.9) 40%,
+     rgba(255, 255, 255, 0.9) 60%,
+     rgba(255, 255, 255, 0) 100%)          
+     }
+}
+
+
+@keyframes smoothAppearance {
+     0% { height: 0%;
+          opacity: 0;}
+     100% {height: 100%;
+          opacity: 1;}
+}

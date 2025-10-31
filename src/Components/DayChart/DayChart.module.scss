@@ -1,0 +1,46 @@
+.container {
+     margin-top: 5vmin;
+}
+
+.container, .content {
+     width: 100%;
+     background-color: black;
+     color: aliceblue;
+}
+
+.headerBox {
+     width: 100%;
+     display: flex;
+     padding: 2vmin;
+     padding-left: 0;
+}
+
+.headerIcon {
+     width: 6vmin;
+     height: 6vmin;
+     margin-right: 2vmin;
+}
+
+.headerText {
+     font-size: 6vmin;
+}
+
+.chartContainer {
+     width: 100%;
+     overflow-y: scroll;
+}
+
+.chartBarsWrap {
+   display: flex;
+//    box-shadow: -1px -5px 3px  rgb(200, 25, 25) inset;
+}
+
+.seriesWrap {
+     width: 100%;
+     display: flex;
+     background-color: black;
+}
+
+
+
+

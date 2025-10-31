@@ -1,0 +1,103 @@
+.container {
+     width: 100%;
+     // background-image: url("../../../../public/assets/RainNight.jpg");
+     background-position: center;
+     background-repeat: no-repeat;
+     background-size: cover;
+     border-radius: 5vmin;
+     margin-top: 2vmin;
+}
+
+
+.content {
+     color: aliceblue;
+     font-size: 4vmin;
+     padding: 2vmin 3vmin 2vmin 3vmin;
+}
+
+.titleWrap {
+     display: flex;
+     justify-content: space-between;
+     margin-bottom: 2vmin;
+}
+
+.cityBox {
+     display: flex;
+}
+
+.titleIcon {
+     width: 4vmin;
+     height: 4vmin;
+}
+
+.city {
+     margin-left: 3vmin;
+}
+
+.weatherDataWrap {
+     display: flex;
+     justify-content: space-between;
+     align-items: end;
+
+     .currentTempWrap {
+          display: flex;
+          align-items: center;
+
+          .currentWeatherIcon {
+               width: 8vmin;
+               height: 8vmin;
+          }
+
+          .currentTemp {
+               font-size: 8vmin;
+               color: aliceblue;
+               margin-left: 3vmin;
+          }
+     }
+
+     .nextDaysWrap {
+          display: flex;
+     }
+
+
+}
+
+.editContainer {
+     width: 100%;
+     margin-top: 2vmin;
+     border-radius: 5vmin;
+     background-color: darkslategray;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+
+     padding: 2vmin 3vmin 2vmin 3vmin;
+
+     .editCityText {
+          font-size: 4vmin;
+          color: aliceblue;
+     }
+
+     .editBtnsWrap {
+          display: flex;
+     }
+
+     .sortBtnsWrap {
+          display: flex;
+     }
+
+     .deleteBtn, .sortBtn {
+          background-color: transparent;
+          border: none;
+          padding: 1vmin;
+          margin-left: 1vmin;
+
+     }
+
+     .deleteBtnIcon, .sortBtnIcon {
+          width: 4vmin;
+          height: 4vmin;
+     }
+     
+}
+

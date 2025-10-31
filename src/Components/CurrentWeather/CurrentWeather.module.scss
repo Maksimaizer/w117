@@ -1,0 +1,31 @@
+.container {
+     width: 100%;
+     background-color: black;
+     margin-top: 3vmin;
+}
+
+.TitleWrap {
+     display: flex;
+     padding: 3vmin 0 3vmin 0;
+}
+
+.titleIcon {
+     width: 6vmin;
+     height: 6vmin;
+     margin-right: 2vmin;
+}
+
+.titleText {
+     color: aliceblue;
+     font-size: 5vmin;
+}
+
+.currentWeatherWrap {
+     width: 100%;
+     display: grid;
+     grid-template-columns: 1fr 1fr 1fr;
+     gap: 3vmin;
+     margin-top: 2vmin;
+     margin-bottom: 15vmin;
+    margin-left: -3vmin; 
+}

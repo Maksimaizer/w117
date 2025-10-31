@@ -1,0 +1,28 @@
+.nextDayWrap {
+     color: aliceblue;
+     margin-left: 3vmin;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+
+     .day {
+          font-size: 3vmin;
+     }
+
+     .nextDayIcon {
+          width: 5vmin;
+          height: 5vmin;
+          margin-top: 0.5vmin;
+          margin-bottom: 1vmin;
+     }
+
+     .temperature {
+          font-size: 3vmin;
+     }
+
+}
+
+.temperatureMin {
+     font-size: 2vmin;
+}
