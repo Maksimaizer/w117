@@ -91,7 +91,7 @@ export async function getWeatherData(setWeatherData: (weatherData: WeatherData) 
          // fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=ru&appid=${API_KEY}&units=metric`);
         // fetch(`/api/weather?city=${city}`);
      
-          const cityResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=ru&appid=${API_KEY}&units=metric`);
+          const cityResponse = await fetch(`/api/weather?city=${city}`);
           const cityData = await cityResponse.json();
 
           const forecastResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${cityData.coord.lat}&longitude=${cityData.coord.lon}&daily=temperature_2m_max,temperature_2m_min,wind_speed_10m_max,weather_code,precipitation_sum,winddirection_10m_dominant,apparent_temperature_max,apparent_temperature_min,pressure_msl_mean&hourly=temperature_2m,weather_code,precipitation,wind_speed_10m&current=temperature_2m,apparent_temperature,weather_code,cloud_cover,wind_speed_10m,pressure_msl,relative_humidity_2m&timezone=auto&forecast_days=14&wind_speed_unit=ms`);

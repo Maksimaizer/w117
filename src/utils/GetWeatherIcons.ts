@@ -70,6 +70,13 @@ import Rainbow from "../../public/assets/svg/rainbow.svg";
 
 // }
 
+
+//      "61": Rain,
+//      "63": Rain,
+//      "53": Rain,
+//      "51": Rain,
+//      "80": Rain,
+
 export const weatherIconsDay: Record<string, string> = {
   "0": "clear-day",
   "1": "partly-cloudy-day",
@@ -79,15 +86,15 @@ export const weatherIconsDay: Record<string, string> = {
   "45": "mist",
   "48": "mist",
 
-  "51": "rain",
-  "53": "rain",
-  "55": "rain",
-  "61": "rain",
-  "63": "rain",
-  "80": "rain",
-  "65": "rain-heavy",
-  "81": "rain-heavy",
-  "82": "rain-heavy",
+  "51": "overcast-day-drizzle",
+  "53": "overcast-day-drizzle",
+  "55": "overcast-day-drizzle",
+  "61": "overcast-day-drizzle",
+  "63": "overcast-day-drizzle",
+  "80": "overcast-day-drizzle",
+  "65": "rain",
+  "81": "rain",
+  "82": "rain",
 
   "71": "snow",
   "73": "snow",
@@ -95,9 +102,9 @@ export const weatherIconsDay: Record<string, string> = {
   "85": "snow",
   "86": "snow",
 
-  "95": "thunderstorm",
-  "96": "thunderstorm",
-  "99": "thunderstorm",
+  "95": "thunderstorms-day-overcast",
+  "96": "thunderstorms-day-overcast",
+  "99": "thunderstorms-day-overcast",
 };
 
 export const weatherIconsNight: Record<string, string> = {
@@ -109,16 +116,16 @@ export const weatherIconsNight: Record<string, string> = {
   "45": "mist",
   "48": "mist",
 
-  "51": "rain-night",
-  "53": "rain-night",
-  "55": "rain-night",
-  "61": "rain-night",
-  "63": "rain-night",
-  "80": "rain-night",
+  "51": "overcast-night-drizzle",
+  "53": "overcast-night-drizzle",
+  "55": "overcast-night-drizzle",
+  "61": "overcast-night-drizzle",
+  "63": "overcast-night-drizzle",
+  "80": "overcast-night-drizzle",
 
-  "65": "rain-heavy",
-  "81": "rain-heavy",
-  "82": "rain-heavy",
+  "65": "rain",
+  "81": "rain",
+  "82": "rain",
 
   "71": "snow",
   "73": "snow",
@@ -126,9 +133,9 @@ export const weatherIconsNight: Record<string, string> = {
   "85": "snow",
   "86": "snow",
 
-  "95": "thunderstorm-night",
-  "96": "thunderstorm-night",
-  "99": "thunderstorm-night",
+  "95": "thunderstorms-night-overcast",
+  "96": "thunderstorms-night-overcast",
+  "99": "thunderstorms-night-overcast",
 };
 
 const weatherDescription = {
