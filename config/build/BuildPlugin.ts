@@ -15,8 +15,10 @@ export function buildPlugin({paths, mode}: BuildOptions): Configuration["plugins
 
      const plugin: Configuration["plugins"] = [
           new HtmlWebpackPlugin({template: paths.html}),
-          new ForkTsCheckerWebpackPlugin()
      ] 
+
+
+     if(isDev) plugin.push(new ForkTsCheckerWebpackPlugin());
 
 
      if(!isDev) {
