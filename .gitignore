@@ -2,8 +2,6 @@
 node_modules/
 
 # Сборка фронтенда
-dist/
-build/
 bundle/
 
 # TypeScript кэш
