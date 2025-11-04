@@ -1,5 +1,5 @@
 import React from 'react';
-import * as styles from './NextDayitem.module.scss';
+import * as styles from './NextDayItem.module.scss';
 import { weekDaysWeather } from '@/utils/FavoriteCities';
 
 interface INextDayitemProps {
