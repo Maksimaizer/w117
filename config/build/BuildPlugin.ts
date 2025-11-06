@@ -3,6 +3,7 @@ import { BuildOptions } from "../types/type";
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import CopyWebpackPlugin from "copy-webpack-plugin";
 
 
 
@@ -15,6 +16,15 @@ export function buildPlugin({paths, mode}: BuildOptions): Configuration["plugins
 
      const plugin: Configuration["plugins"] = [
           new HtmlWebpackPlugin({template: paths.html}),
+          new CopyWebpackPlugin({
+               patterns: [
+               {
+                    from: "public/assets",
+                    to: "assets",                    
+                    noErrorOnMissing: true,
+               }
+               ]
+          }),
      ] 
 
 
