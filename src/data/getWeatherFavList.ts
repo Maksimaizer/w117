@@ -27,7 +27,6 @@ export interface IfavCities {
      ]
 }
 
-    const API_KEY= "d2b231cdc4cabafdede7d8bb469ef74f"
 
 export async function getWeatherForFavoriteList() {
           const favList = JSON.parse(localStorage.getItem("favCitiesList") || "[]");
@@ -38,7 +37,7 @@ export async function getWeatherForFavoriteList() {
 
           // await fetch(`/api/weather?city=${lastCityName}`);
           // Получаем координаты
-          const coordsResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${lastCityName}&lang=ru&appid=${API_KEY}&units=metric`);
+          const coordsResponse = await fetch(`/api/weather?city=${lastCityName}`);
           const coords = await coordsResponse.json();
 
           // Получаем расширенный прогноз
@@ -116,7 +115,7 @@ export async function updateAllFavoriteCitiesIfOld() {
 
       // await fetch(`/api/weather?city=${item.city}`);
       // Получаем координаты
-      const coordsResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${item.city}&lang=ru&appid=${API_KEY}&units=metric`);
+      const coordsResponse =await fetch(`/api/weather?city=${item.city}`);
       
       const coords = await coordsResponse.json();
 

@@ -56,13 +56,19 @@ app.get("/api/weather", async (req, res) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log("✅ Сервер запущен на порту " + PORT));
 
-// --- РАЗДАЧА REACT BUILD ---
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "bundle")));
-  app.get("*", (_, res) => {
-    res.sendFile(path.join(__dirname, "bundle", "index.html"));
-  });
-}
+
+
+
+
+
+
+// // --- РАЗДАЧА REACT BUILD ---
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "bundle")));
+//   app.get("*", (_, res) => {
+//     res.sendFile(path.join(__dirname, "bundle", "index.html"));
+//   });
+// }
 
 
 
