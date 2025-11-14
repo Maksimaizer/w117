@@ -3,25 +3,36 @@ import * as styles from './FavoriteCitiesItem.module.scss';
 import NextDayitem from './NextDayItem/NextDayitem';
 import { favCityArr, favoriteCities, weekDaysWeather, weekDaysWeatherArr } from '@/utils/FavoriteCities';
 import { historyArr } from '@/utils/HistoryArr';
+import { IfavCities } from '@/data/getWeatherFavList';
 
 
 interface IFavoriteCitiesItemProps {
-     cityData: favCityArr;
+     cityData: IfavCities;
      isEdit: boolean;
      index: number;
      moveItem: (index: number, direction: number) => void;
-     favCities: favCityArr[];
-     setFavCities: Dispatch<React.SetStateAction<favCityArr[]>>;
+     favCitiesCahce: IfavCities[];
+     // setFavCities: Dispatch<React.SetStateAction<favCityArr[]>>;
      setAddFavCity: Dispatch<React.SetStateAction<boolean>>;
 }
 
-const FavoriteCitiesItem = ({cityData, isEdit, index, moveItem, favCities, setFavCities, setAddFavCity}: IFavoriteCitiesItemProps) => {
+
+export interface IfavDayForecast {
+     minTemp: number;
+     maxTemp: number;
+     icon: string;
+     day: string;
+}
+
+const FavoriteCitiesItem = ({cityData, isEdit, index, setAddFavCity, moveItem, favCitiesCahce}: IFavoriteCitiesItemProps) => {
 
      // в JSX ставим opacity на кнопки сортировки 
      const firstBtn = index == 0;
-     const lastBtn = favCities.length - 1 == index;
+     const lastBtn = favCitiesCahce.length - 1 == index;
      
-     const [nextDaysArr, setNextDaysArr] = useState<weekDaysWeather[]>(weekDaysWeatherArr);
+    // const [icon, setIcon] = useState("/assets/svg/clear-day.svg");
+    // const [nextDaysArr, setNextDaysArr] = useState<IfavDayForecast[]>(cityData.forecast);
+     const [time, setTime] = useState<string>("");
 
      function btnSortHandle(e: React.MouseEvent<HTMLButtonElement>) {
 
@@ -31,21 +42,75 @@ const FavoriteCitiesItem = ({cityData, isEdit, index, moveItem, favCities, setFa
 
      }
 
+
      function deleteBtnHandle() {
-          favoriteCities.splice(index, 1);
+         // favoriteCities.splice(index, 1);
           
-         if(!historyArr.includes(cityData.city)) historyArr.push(cityData.city);
+          const favoriteCityArr = JSON.parse(localStorage.getItem("favCitiesList") || "[]");
+          const historyList = JSON.parse(localStorage.getItem("historyList") || '[]');
+          const updated = favoriteCityArr.filter((_: any, i: number) => i !== index);
+
+               const existingCity = historyList.find((item: any) => item.city === cityData.city);
+               if(!existingCity) {
+                    historyList.push({
+                         city: cityData.city,
+                         temperature: 0,
+                         date: 0,
+                         timezone: 0,
+                         backgroundImg: "",
+                         currentIcon: "clear-day",
+                         forecast: [
+                              {maxTemp: 0, minTemp: 0, icon: "clear-day", day: ""},
+                              {maxTemp: 0, minTemp: 0, icon: "clear-day", day: ""}
+                         ]
+                    })
+               }
+     
+          localStorage.setItem("historyList", JSON.stringify(historyList));
+
+          localStorage.setItem("favCitiesList", JSON.stringify(updated));
+
+          window.dispatchEvent(new Event("favCitiesUpdated"));
 
 
-          setFavCities([...favoriteCities]);
+        //  setFavCities([...favoriteCities]);
           setAddFavCity(prev => !prev);
+     
      }
+
+          useEffect(() => {
+               if (cityData.timezone == 0) return;
+     
+               const updateTime = () => {
+                    const nowUTC = Date.now();
+                    const localDate = new Date(nowUTC + cityData.timezone * 1000);
+     
+                    const formatter = new Intl.DateTimeFormat("ru-RU", {
+                         hour: "2-digit",   // часы
+                         minute: "2-digit", // минуты// секунды (можно убрать, если не надо)
+                         timeZone: "UTC"    // мы уже прибавили смещение, поэтому оставляем UTC
+                    });
+                    
+                    const formatted = formatter.format(localDate);
+     
+                    setTime(formatted);
+               };
+     
+               updateTime();
+     
+               const interval = setInterval(updateTime, 1000);
+     
+         // очистка таймера при размонтировании / смене города
+                return () => clearInterval(interval);
+     
+          }, [cityData.timezone]);
 
 
      return (
           <>
           {!isEdit && 
-          <div className={styles.container} style={{backgroundImage: `url(${cityData.background})`}}>
+          <div className={styles.container} style={{backgroundImage: `url(${cityData.backgroundImg})`}}>
+               <div className={styles.fade}></div>
                <div className={styles.content}>
                
                     <div className={styles.titleWrap}>
@@ -53,18 +118,18 @@ const FavoriteCitiesItem = ({cityData, isEdit, index, moveItem, favCities, setFa
                               <img className={styles.titleIcon} src='/assets/BtnImages/whiteStar.png' alt='white star'></img>
                               <div className={styles.city}>{cityData.city}</div>
                          </div>
-                         <div>{cityData.hours + ":" + cityData.minutes}</div>
+                         <div>{time}</div>
                     </div>
 
                     <div className={styles.weatherDataWrap}>
 
                          <div className={styles.currentTempWrap}>
-                              <img className={styles.currentWeatherIcon} src="/assets/BtnImages/half-moon.png" alt='half moon'></img>
-                              <div className={styles.currentTemp}>{cityData.currentTemp}°</div>
+                              <img className={styles.currentWeatherIcon} src={`/assets/svg/${cityData.currentIcon}.svg`} alt='half moon'></img>
+                              <div className={styles.currentTemp}>{cityData.temperature}°</div>
                          </div>
 
                          <div className={styles.nextDaysWrap}>
-                              {nextDaysArr.map((weatherData, index)=> <NextDayitem key={index} weatherData={weatherData}/>)}
+                              {cityData.forecast.map((forecastData, index)=> <NextDayitem key={index} forecastData={forecastData}/>)}
                          </div>
                     </div>
                            

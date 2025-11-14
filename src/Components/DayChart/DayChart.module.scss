@@ -28,6 +28,7 @@
 .chartContainer {
      width: 100%;
      overflow-y: scroll;
+     user-select: none;
 }
 
 .chartBarsWrap {

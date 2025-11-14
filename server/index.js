@@ -4,7 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const TelegramApi = require("node-telegram-bot-api");
 
-//const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 const token = process.env.BOT_TOKEN;     // твоё значение из .env
 const webAppUrl = process.env.WEBAPP_URL; // ссылка на фронтенд
@@ -56,25 +56,19 @@ app.get("/api/weather", async (req, res) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log("✅ Сервер запущен на порту " + PORT));
 
-// // --- РАЗДАЧА REACT BUILD ---
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "bundle")));
-//   app.get("*", (_, res) => {
-//     res.sendFile(path.join(__dirname, "bundle", "index.html"));
-//   });
-// }
+// --- РАЗДАЧА REACT BUILD ---
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "bundle")));
+  app.get("*", (_, res) => {
+    res.sendFile(path.join(__dirname, "bundle", "index.html"));
+  });
+}
 
-// import express from "express";
-// import dotenv from "dotenv";
-// import cors from "cors";
-// import fetch from "node-fetch"; // ES Module импорт
 
-// require("dotenv").config();
-// const path = require("path");
-// const express = require("express");
-// const cors = require("cors");
 
-// //dotenv.config();
+
+
+
 
 // const app = express();
 // const PORT = process.env.PORT || 5000;

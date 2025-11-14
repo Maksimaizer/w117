@@ -15,7 +15,7 @@ interface IMyHeaderProps {
 
 const MyHeader = ({headerRef, weatherData}: IMyHeaderProps) => {
 
-     const [icon, setIcon] = useState("/assets/svg/clear-day.svg");
+     const [icon, setIcon] = useState("clear-day");
      const [description, setDescription] = useState("");
 
      const [bgImg, setBgImg] = useState("");

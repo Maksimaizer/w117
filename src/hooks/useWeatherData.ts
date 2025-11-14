@@ -1,3 +1,4 @@
+import { IfavCities } from "@/data/getWeatherFavList";
 import { WeatherData } from "@/interfaces/weatherData";
 import { useState } from "react";
 
@@ -51,3 +52,4 @@ export function useWeatherData() {
 
      return { weatherData, setWeatherData };
 }
+

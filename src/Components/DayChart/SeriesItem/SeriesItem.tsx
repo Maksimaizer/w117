@@ -25,10 +25,8 @@ const SeriesItem = ({weatherData, btnSelect, days, index}: ISeriesItemProps) => 
 
             refImg.current.style.cssText = `
             transform: rotate(${weatherData.daily.winddirection_10m_dominant[index]}deg);
-            width: 8vmin;
-            height: 8vmin;
-            margin-top: 1vmin;
-            margin-bottom: 1vmin;           
+            width: 40px;
+            height: 40px;         
             `;
 
           } else {
@@ -36,10 +34,8 @@ const SeriesItem = ({weatherData, btnSelect, days, index}: ISeriesItemProps) => 
                refImg.current.src = `/assets/svg/${icon}.svg`;
                refImg.current.style.cssText = `
                transform: rotate(0deg);
-               width: 10vmin;
-               height: 10vmin;
-               margin-top: 0vmin;
-               margin-bottom: 1vmin;           
+               width: 45px;
+               height: 45px;         
                `;
           }
      }
@@ -51,7 +47,7 @@ const SeriesItem = ({weatherData, btnSelect, days, index}: ISeriesItemProps) => 
      return (
           <div className={styles.seriesItemWrap}>
 
-               {btnSelect.precipitarion && <div className={styles.dataText}>{weatherData.daily.precipitation_sum[index]}<span style={{fontSize: "3vmin"}}>mm</span></div>}
+               {btnSelect.precipitarion && <div className={styles.dataText}>{weatherData.daily.precipitation_sum[index]}<span style={{fontSize: "13px"}}>mm</span></div>}
                <img ref={refImg} loading='lazy' alt='Weather Icon' className={styles.weatherIcon}></img>
                <div className={styles.dataText}>{days[index]}</div>
                

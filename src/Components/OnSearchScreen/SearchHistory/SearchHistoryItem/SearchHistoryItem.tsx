@@ -2,50 +2,68 @@ import React, { Dispatch, useEffect, useRef } from 'react';
 import * as styles from './SearchHistoryItem.module.scss';
 import { favoriteCities } from '@/utils/FavoriteCities';
 import { historyArr } from '@/utils/HistoryArr';
+import { getWeatherForFavoriteList } from '@/data/getWeatherFavList';
 
 interface ISearchHistoryItemProps {
-     city: string;
+     cityData: any;
      index: number;
-     searchHistortArr: string[];
+     historyCahce: string[];
+     setHistoryCahce: Dispatch<React.SetStateAction<string[]>>;
      setAddFavCity : Dispatch<React.SetStateAction<boolean>>;
      isEdit: boolean;
 }
 
-const SearchHistoryItem = ({city, index, searchHistortArr, setAddFavCity, isEdit}: ISearchHistoryItemProps) => {
+const SearchHistoryItem = ({cityData, index, historyCahce, setHistoryCahce, isEdit, setAddFavCity}: ISearchHistoryItemProps) => {
 
 
      function btnFavHandle() {
 
-          if(favoriteCities.find((e) => e.city == city)) {
-               historyArr.splice(index, 1);
-               setAddFavCity(prev => !prev);
-          } else {
+  
+          const favoriteCityArr = JSON.parse(localStorage.getItem("favCitiesList") || "[]");
+
+          if(favoriteCityArr.length >= 5) return;
+
+          const existingCity = favoriteCityArr.find((item: any) => item.city === cityData.city);
+          if(!existingCity) {
+
+               favoriteCityArr.push({
+                         city: cityData.city,
+                         temperature: 0,
+                         date: 0,
+                         timezone: 0,
+                         backgroundImg: "",
+                         currentIcon: "clear-day",
+                         forecast: [
+                              {maxTemp: 0, minTemp: 0, icon: "clear-day", day: ""},
+                              {maxTemp: 0, minTemp: 0, icon: "clear-day", day: ""}
+                         ]
+                    });
+               localStorage.setItem("favCitiesList", JSON.stringify(favoriteCityArr));
+               getWeatherForFavoriteList();
+               btnDelHandle();
                setAddFavCity(prev => !prev);
 
-               favoriteCities.push({
-                    city: city,
-                    hours: 13,
-                    minutes: 54,
-                    currentTemp: 20,
-                    background: "/assets/RainNight.jpg"
-               });
-
-               historyArr.splice(index, 1);
           }
+
      }
 
      function btnDelHandle() {
-          historyArr.splice(index, 1);
-          setAddFavCity(prev => !prev);
+          const historyArr = JSON.parse(localStorage.getItem("historyList") || '[]');
+
+          const updated = historyArr.filter((_: any, i: number) => i !== index); 
+
+
+          localStorage.setItem("historyList", JSON.stringify(updated));
+          setHistoryCahce(updated);
      }
 
 
      return (
-               <div style={{borderBottom: index !== searchHistortArr.length - 1 ? "1px solid rgba(128, 128, 128, 0.2)" : ""}} className={styles.itemWrap}>
+               <div style={{borderBottom: index !== historyCahce.length - 1 ? "1px solid rgba(128, 128, 128, 0.2)" : ""}} className={styles.itemWrap}>
                     
                     <div className={styles.tiyleWtap}>
                          <img className={styles.locationImg} src='/assets/OnSearchScreen/location.png' loading='lazy' alt=''></img>
-                         {city}
+                         {cityData.city}
                     </div>
                     
                     <div className={styles.btnsWrap}>

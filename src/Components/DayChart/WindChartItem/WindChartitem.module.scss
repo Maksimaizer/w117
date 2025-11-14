@@ -1,6 +1,8 @@
+@use "../variables.module.scss" as v;
+
 .columnBox {
-     height: 225px;
-     min-width: 80px;
+     height: v.$column-box-height;
+     min-width: v.$column-box-width;
      // padding: 0 5vmin 0 5vmin;
      display: flex;
      justify-content: end;
@@ -12,7 +14,7 @@
 
 .columnContent {
      height: 100%;
-     min-width: 80px;
+     min-width: v.$column-box-width;
      display: flex;
      flex-direction: column;
      justify-content: end;
@@ -22,11 +24,11 @@
 }
 
 .windLabel {
-     font-size: 5vmin;
+     font-size: v.$font-size;
 }
 
 .windBar {
-     width: 14vmin;
+     width: 70%;
      background-image: linear-gradient(to top, rgba(81, 81, 81, 0.1), rgba(81, 81, 81, 1));  
 }
 

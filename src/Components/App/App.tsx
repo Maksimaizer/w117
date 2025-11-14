@@ -14,6 +14,8 @@ import WeekForecast from '../WeekForecast/WeekForecast';
 import { useWeatherData } from '@/hooks/useWeatherData';
 import { getWeatherData } from '@/data/getWeatherData';
 import { useForecastLabels } from '@/hooks/useForecastLabels';
+import { preloadIcons } from '@/utils/GetWeatherIcons';
+import { getWeatherForFavoriteList, updateAllFavoriteCitiesIfOld } from '@/data/getWeatherFavList';
 
 export interface IisWeekForecast {
      toShow: boolean;
@@ -36,6 +38,8 @@ const App = () => {
 
      const [selectedIndex, setSelectedIndex] = useState(0);
 
+     const [addFavCity, setAddFavCity] = useState(false);
+
 
      useEffect(() => {
           const cachedCity = localStorage.getItem("cityCache");
@@ -43,15 +47,59 @@ const App = () => {
 
           if(cachedCity) setCity(parsedCity);
           else setCity("Моздок");
+     }, []);
+
+     useEffect(() => {
+          preloadIcons();
+         // localStorage.removeItem("favCitiesList");
      }, [])
-
-
-
 
      useEffect(() => {
          if(!city) return;
           getWeatherData(setWeatherData, city);
      }, [city]);
+
+     useEffect(() => {
+          updateAllFavoriteCitiesIfOld();
+     }, []);
+
+
+
+          useEffect(() => {
+               if(!weatherData.name) return;
+     
+
+               const cachedCity = localStorage.getItem("cityCache");
+               const isInitialLoad = cachedCity && JSON.parse(cachedCity) === weatherData.name;
+
+               if(isInitialLoad) return;
+     
+               const historyList = JSON.parse(localStorage.getItem("historyList") || '[]');
+
+
+               localStorage.setItem("cityCache", JSON.stringify(weatherData.name));
+
+
+               const existingCity = historyList.find((item: any) => item.city === weatherData.name);
+               if(!existingCity) {
+                    historyList.push({
+                         city: weatherData.name,
+                         temperature: 0,
+                         date: 0,
+                         timezone: 0,
+                         backgroundImg: "",
+                         currentIcon: "clear-day",
+                         forecast: [
+                              {maxTemp: 0, minTemp: 0, icon: "clear-day", day: ""},
+                              {maxTemp: 0, minTemp: 0, icon: "clear-day", day: ""}
+                         ]
+                    })
+               }
+     
+               localStorage.setItem("historyList", JSON.stringify(historyList));
+          
+     
+          }, [weatherData.name]);
 
 
 
@@ -69,7 +117,7 @@ const App = () => {
                     </div>
                </div>
 
-               {isSearch && <OnSearchScreen setIsSearch={setIsSearch} setCity={setCity}/>}
+               {isSearch && <OnSearchScreen setIsSearch={setIsSearch} setCity={setCity} weatherData={weatherData} addFavCity={addFavCity} setAddFavCity={setAddFavCity}/>}
                {isWeekForecast.toShow && <WeekForecast isWeekForecast={isWeekForecast} setIsWeekForecast={setIsWeekForecast} weatherData={weatherData} days={days} selectedIndex={selectedIndex}/>}
                
           </div>

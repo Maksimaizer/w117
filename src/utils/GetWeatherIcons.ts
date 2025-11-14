@@ -190,26 +190,36 @@ const unsplashDescription = {
      "99": "Thunderstorm",
 }
 
+export function preloadIcons() {
+
+     const preloaded = new Set<string>();
+
+
+     [weatherIconsDay, weatherIconsNight].forEach(obj => {
+     Object.values(obj).forEach(iconName => {
+          const path = `/assets/svg/${iconName}.svg`;
+          if (!preloaded.has(path)) {
+          preloaded.add(path);
+          const img = new Image();
+          img.src = path;
+          }
+     });
+     });
+
+
+     const preloadArrow = new Image();
+     preloadArrow.src = "/assets/ChartIcons/UpArrow.png";
+  
+}
+
 export function getWeatherIconSvg(code: number | string, currentTime?: string): string {
-     // let dayOrNight: "day" | "night" | undefined;
 
-     // if(currentTime) {
-     //      const hour = +currentTime.split("T")[1].slice(0, 2);
-     //      dayOrNight = hour < 6 || hour > 18 ? "night" : "day";
-     // }
+     const hour = currentTime ? +currentTime.split("T")[1].slice(0, 2) : 12;
+     const isNight = hour < 6 || hour > 18;
 
-     // if (!dayOrNight || dayOrNight === "day") {
-     //      return weatherIcons[code as keyof typeof weatherIcons] || Rainbow;
-     // }
+     const dict = isNight ? weatherIconsNight : weatherIconsDay;
 
-     // return weatherIconsNight[code as keyof typeof weatherIconsNight] || Rainbow;
-
-       const hour = currentTime ? +currentTime.split("T")[1].slice(0, 2) : 12;
-  const isNight = hour < 6 || hour > 18;
-
-  const dict = isNight ? weatherIconsNight : weatherIconsDay;
-
-  return dict[String(code)] || "rainbow";
+     return dict[String(code)] || "rainbow";
 }
 
 export function getWeatherDescr(code: number | string): string {
@@ -231,52 +241,3 @@ export function getUnsplashDescr(code: number | string, time: string): string {
      return finalDescr;
 }
 
-
-
-// export function getWeatherIconArr(weatherCode: number[], timeOffset: number) {
-
-//         //  const code = weatherData.hourly.weather_code[+hours[0].slice(0, 2) + pos];
-//           let code = 0;
-//           let icon = "01d";
-//           const codesArr = []
-
-//           for(let i = 0; i <= 11; i++) {
-
-//                code = weatherCode[timeOffset + i];
-
-//                if(code == 0) icon = "01d";
-//                else if(code == 1 || code == 2) icon = "02d";
-//                else if(code == 3) icon = "03d";
-//                else if(code == 61 || code == 63 || code == 53 || code == 51) icon = "10d";
-//                else if(code == 65 || code == 55) icon = "09d";
-//                else if(code == 45 || code == 48) icon = "50d";
-//                else if(code == 71 || code == 73 || code == 75) icon = "13d";
-               
-//                codesArr.push(icon);
-//           }
-
-          
-
-//           console.log(codesArr);
-
-//           return codesArr
-
-//      }
-
-
-//      export function getWeatherIcon(weatherCode: number) {
-
-//                let icon = "";
-
-//                if(weatherCode == 0) icon = "01d";
-//                else if(weatherCode == 1 || weatherCode == 2) icon = "02d";
-//                else if(weatherCode == 3) icon = "03d";
-//                else if(weatherCode == 61 || weatherCode == 63 || weatherCode == 53 || weatherCode == 51 || weatherCode == 80) icon = "10d";
-//                else if(weatherCode == 65 || weatherCode == 55 || weatherCode == 81 || weatherCode == 82) icon = "09d";
-//                else if(weatherCode == 45 || weatherCode == 48) icon = "50d";
-//                else if(weatherCode == 71 || weatherCode == 73 || weatherCode == 75) icon = "13d";
-
-//                console.log("I am daily icon: " + weatherCode);
-
-//                return icon;
-//      }

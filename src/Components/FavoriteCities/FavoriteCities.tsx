@@ -2,6 +2,8 @@ import React, { Dispatch, useEffect, useState } from 'react';
 import * as styles from './FavoriteCities.module.scss';
 import FavoriteCitiesItem from './FavoriteCitiesItem/FavoriteCitiesItem';
 import { favCityArr, favoriteCities } from '@/utils/FavoriteCities';
+import { getUnsplashDescr, getWeatherIconSvg } from '@/utils/GetWeatherIcons';
+import { getWeatherForFavoriteList, IfavCities } from '@/data/getWeatherFavList';
 
 interface IFavoriteCitiesProps {
      addFavCity: boolean;
@@ -10,9 +12,23 @@ interface IFavoriteCitiesProps {
      setAddFavCity: Dispatch<React.SetStateAction<boolean>>;
 }
 
+
 const FavoriteCities = ({addFavCity, setIsEdit, isEdit,  setAddFavCity}: IFavoriteCitiesProps) => {
 
-     const [favCities, setFavCities] = useState<favCityArr[]>(favoriteCities);
+    // const [favCities, setFavCities] = useState<favCityArr[]>(favoriteCities);
+
+    const [favCitiesCahce, setFavCitiesCahce] = useState<IfavCities[]>([{
+                         city: "",
+                         temperature: 0,
+                         date: 0,
+                         timezone: 0,
+                         backgroundImg: "",
+                         currentIcon: "clear-day",
+                         forecast: [
+                              {maxTemp: 0, minTemp: 0, icon: "clear-day", day: ""},
+                              {maxTemp: 0, minTemp: 0, icon: "clear-day", day: ""},
+                         ]
+                    }]);
 
      // useEffect(() => {
      //      setFavCities(favoriteCities);
@@ -20,38 +36,90 @@ const FavoriteCities = ({addFavCity, setIsEdit, isEdit,  setAddFavCity}: IFavori
      // }, [favoriteCities]);
 
 
+     // useEffect(() => {
+         
+     //      const favoriteCitiesArr = JSON.parse(localStorage.getItem("favCitiesList") || '[]');
+
+     //      setFavCitiesCahce(favoriteCitiesArr);
+     
+
+     // }, [addFavCity]);
+
      useEffect(() => {
-          // if(addFavCity == "") return;
+          const handleUpdate = () => {
+               const updated = JSON.parse(localStorage.getItem("favCitiesList") || "[]");
+               setFavCitiesCahce(updated);
+          };
 
-          //  favoriteCities.push({
-          //      city: addFavCity,
-          //      hours: 13,
-          //      minutes: 54,
-          //      currentTemp: 20,
-          //      background: "/assets/RainNight.jpg"
+          handleUpdate()
 
-          // });
-
-          setFavCities([...favoriteCities]);
-
+          window.addEventListener("favCitiesUpdated", handleUpdate);
+          return () => window.removeEventListener("favCitiesUpdated", handleUpdate);
      }, [addFavCity]);
+
+     // useEffect(() => {
+     //     // getWeatherForFavoriteList();
+     // }, [addFavCity]);
+
+     // async function getWeatherForFavoriteList() {
+     //      const newCity = JSON.parse(localStorage.getItem("favCitiesList"));
+
+     //      setFavCitiesCahce(newCity);
+
+     //      const getCoords = await fetch(`/api/weather?city=${newCity[-1].city}`);
+     //      const coordsResponse = await getCoords.json();
+
+     //      const getWeatherFull = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${coordsResponse.coord.lat}&longitude=${coordsResponse.coord.lon}&daily=temperature_2m_max,temperature_2m_min,weather_code&current=temperature_2m,weather_code&timezone=auto&forecast_days=3&wind_speed_unit=ms`);
+     //      const weatherResponse = await getWeatherFull.json();
+     //      const weatherData = {
+     //                city: newCity[-1].city,
+     //                temprerature: weatherResponse.current.temperature_2m,
+     //                date: coordsResponse.dt,
+     //                timezone: coordsResponse.timezone,
+     //                forecast: [
+     //                     {maxTemp: weatherResponse.daily[0].temperature_2m_max, minTemp: weatherResponse.daily[0].temperature_2m_min},
+     //                     {maxTemp: weatherResponse.daily[1].temperature_2m_max, minTemp: weatherResponse.daily[1].temperature_2m_min}
+     //                ]
+     //           }
+
+     //      newCity.slice(-1, 1);
+
+     //      const fullFavList = newCity;
+     //      fullFavList.push(weatherData);
+
+     //      setFavCitiesCahce(fullFavList);
+
+     //      localStorage.setItem("favCitiesList", JSON.stringify(fullFavList));
+     // }
+
+
+
+     // useEffect(() => {
+     //      const newCity = JSON.parse(localStorage.getItem("favCity"));
+
+     //     // https://api.open-meteo.com/v1/forecast?latitude=55.7522&longitude=37.6156&daily=temperature_2m_max,temperature_2m_min,weather_code&current=temperature_2m,weather_code&timezone=auto&forecast_days=3&wind_speed_unit=ms
+
+
+
+     // }, [addFavCity]);
 
 
     const moveItem = (index: number, direction: number) => {
-          const newArr = [...favCities];
+          const newArr = [...favCitiesCahce];
           const targetIndex = index + direction;
 
           // проверка чтобы не вылететь за границы
-          if (targetIndex < 0 || targetIndex >= favCities.length) return;
+          if (targetIndex < 0 || targetIndex >= favCitiesCahce.length) return;
 
           // меняем местами
           [newArr[index], newArr[targetIndex]] = [newArr[targetIndex], newArr[index]];
 
           // setFavCities(newArr);
 
-          favoriteCities.length = 0;
-          favoriteCities.push(...newArr);
-          setFavCities([...favoriteCities]);
+          localStorage.setItem("favCitiesList", JSON.stringify(newArr));
+          setFavCitiesCahce([...newArr]);
+
+          window.dispatchEvent(new Event("favCitiesUpdated"));
      };
 
 
@@ -78,14 +146,20 @@ const FavoriteCities = ({addFavCity, setIsEdit, isEdit,  setAddFavCity}: IFavori
 
 
                     <div className={styles.favoriteCitiesWrap}>
-                         {favCities.map((cityData, index) => <FavoriteCitiesItem
+
+                         {favCitiesCahce.length == 0 && <div className={styles.favCitiesPlaceHolder}>
+                              <div className={styles.favCitiesPHText}>Пока ничего нет.</div>
+                              <img src="/assets/OnSearchScreen/dog.png" className={styles.favCitiesPHImg}></img>
+                         </div>}
+
+                         {favCitiesCahce.map((cityData, index) => <FavoriteCitiesItem
                          cityData={cityData}
-                         key={index}
+                         key={cityData.city}
                          index={index}
                          isEdit={isEdit}
                          moveItem={moveItem}
-                         favCities={favCities}
-                         setFavCities={setFavCities}
+                         favCitiesCahce={favCitiesCahce}
+                         // setFavCities={setFavCities}
                          setAddFavCity={setAddFavCity} />)}
                     </div>
                </div>
