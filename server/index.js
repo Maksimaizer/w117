@@ -7,8 +7,8 @@ const TelegramApi = require("node-telegram-bot-api");
 
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
-const token = process.env.BOT_TOKEN;     // твоё значение из .env
-const webAppUrl = process.env.WEBAPP_URL; // ссылка на фронтенд
+const token = process.env.BOT_TOKEN;     
+const webAppUrl = process.env.WEBAPP_URL; 
 
 const app = express();
 if (process.env.NODE_ENV === "development") {
@@ -32,9 +32,8 @@ function saveUsers(data) {
 // ---- Диалог состояния ----
 const userState = {};  // chatId → "waiting_city_time"
 
-// -------------------------------------
-// 📌 /start Команда
-// -------------------------------------
+
+//  /start Команда
 const againOptions = {
   reply_markup: JSON.stringify({
     inline_keyboard: [
@@ -53,7 +52,7 @@ bot.onText(/\/start/, (msg) => {
 });
 
 // -------------------------------------
-// 📌 /setcity — пользователь начинает настройку
+//  /setcity — пользователь начинает настройку
 // -------------------------------------
 bot.onText(/\/setcity/, (msg) => {
   const chatId = msg.chat.id;
@@ -64,7 +63,7 @@ bot.onText(/\/setcity/, (msg) => {
 });
 
 // -------------------------------------
-// 📌 Обработка ввода "Москва 09:00"
+//  Обработка ввода "Москва 09:00"
 // -------------------------------------
 bot.on("message", async (msg) => {
   const chatId = msg.chat.id;
@@ -130,7 +129,7 @@ bot.on("message", async (msg) => {
 });
 
 // -------------------------------------
-// 📌 CRON — Проверка каждую минуту
+//  CRON — Проверка каждую минуту
 // -------------------------------------
 cron.schedule("* * * * *", async () => {
   const now = new Date();
@@ -170,7 +169,7 @@ cron.schedule("* * * * *", async () => {
 
 //=====================================================================
 // -------------------------------------
-// 📌 /deletecity — удалить город пользователя
+//  /deletecity — удалить город пользователя
 // -------------------------------------
     bot.onText(/\/deletecity/, (msg) => {
       const chatId = msg.chat.id;
@@ -194,14 +193,14 @@ cron.schedule("* * * * *", async () => {
 //====================================================================
 
 
-// bot.on("message", async (msg) => {
-//   const chatId = msg.chat.id;
-//   const text = msg.text;
+bot.on("message", async (msg) => {
+  const chatId = msg.chat.id;
+  const text = msg.text;
 
-//   if (text === "/start") {
-//     await bot.sendMessage(chatId, "Привет! Нажми кнопку, чтобы открыть приложение 👇", againOptions);
-//   }
-// });
+  if (text === "/start") {
+    await bot.sendMessage(chatId, "Привет! Нажми кнопку, чтобы открыть приложение 👇", againOptions);
+  }
+});
 
 // --- API ДЛЯ ФРОНТЕНДА ---
 app.get("/api/weather", async (req, res) => {
@@ -261,21 +260,18 @@ app.get("/api/random-pic", async (req, res) => {
 });
 
 app.get("/api/random-pics", async (req, res) => {
-  const { query } = req.query;
-
-  if (!query) {
-    return res.status(400).json({ error: "query обязателен" });
-  }
-
   try {
     const apiKey = process.env.UNSPLASH_API_KEY;
 
-    const url = `https://api.unsplash.com/photos/random?count=14&query=${encodeURIComponent(
-      query
-    )}&orientation=portrait&client_id=${apiKey}`;
+    const url = `https://api.unsplash.com/photos/random?count=14&query=macro+nature&orientation=portrait&client_id=${apiKey}`;
 
     const response = await fetch(url);
-    const data = await response.json();
+    let data = await response.json();
+
+    // Если вернулся один объект, оборачиваем в массив
+    if (!Array.isArray(data)) {
+      data = [data];
+    }
 
     res.json(data);
   } catch (error) {
@@ -365,4 +361,25 @@ app.listen(PORT, () => console.log("✅ Сервер запущен на пор�
 //   }
 // });
 
-// app.listen(PORT, () => console.log(`✅ Сервер запущен на http://localhost:${PORT}`));
+// app.get("/api/random-pics", async (req, res) => {
+//   try {
+//     const apiKey = process.env.UNSPLASH_API_KEY;
+
+//     const url = `https://api.unsplash.com/photos/random?count=14&query=macro+nature&orientation=portrait&client_id=${apiKey}`;
+
+//     const response = await fetch(url);
+//     let data = await response.json();
+
+//     // Если вернулся один объект, оборачиваем в массив
+//     if (!Array.isArray(data)) {
+//       data = [data];
+//     }
+
+//     res.json(data);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Ошибка получения списка фото" });
+//   }
+// });
+
+//  app.listen(PORT, () => console.log(`✅ Сервер запущен на http://localhost:${PORT}`));

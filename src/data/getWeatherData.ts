@@ -29,7 +29,7 @@ async function getCachedWeekPics(): Promise<UnsplashPhoto[]> {
 
   console.log("Загружаем новые фото...");
   //await fetch(`https://api.unsplash.com/photos/random?count=14&query=macro+nature&orientation=portrait&client_id=${API_KEY_PICS}`);
-   const randomPicsArrResponse = await fetch(`/api/random-pics?descr=macro+nature`);
+   const randomPicsArrResponse = await fetch(`/api/random-pics`);
    const randomPicsArr: UnsplashPhoto[] = await randomPicsArrResponse.json();
 
    const randomPicsUrls = randomPicsArr.map((data: any) => ({
