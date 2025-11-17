@@ -100,6 +100,7 @@ export const weatherIconsDay: Record<string, string> = {
   "81": "rain",
   "82": "rain",
 
+  "77": "snow",
   "71": "snow",
   "73": "snow",
   "75": "snow",
@@ -134,6 +135,7 @@ export const weatherIconsNight: Record<string, string> = {
   "81": "rain",
   "82": "rain",
 
+  "77": "snow",
   "71": "snow",
   "73": "snow",
   "75": "snow",
@@ -165,6 +167,7 @@ const weatherDescription = {
      "48": "Туман",
      "71": "Небольшой снег",
      "73": "Снег",
+     "77": "Сильный снег",
      "75": "Метель",
      "85": "Метель",
      "86": "Метель",
@@ -193,6 +196,7 @@ const unsplashDescription = {
      "48": "Mist",
      "71": "Slight+Snow",
      "73": "Snow",
+     "77": "Heavy+Snow",
      "75": "Blizzard",
      "85": "Blizzard",
      "86": "Blizzard",

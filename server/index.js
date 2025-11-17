@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const cron = require("node-cron");
 const TelegramApi = require("node-telegram-bot-api");
+const fs = require("fs");
 
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
@@ -149,7 +150,7 @@ cron.schedule("* * * * *", async () => {
 
       const chanceOfRanin = data.forecast.forecastday[0].day.daily_chance_of_rain;
       const chanceOfSnow = data.forecast.forecastday[0].day.daily_chance_of_snow;
-      const precepitationChance = chanceOfRanin > chanceOfSnow ? `Вероятность дождя ${chanceOfRanin}%` : `Вероятность выпадения снега ${chanceOfSnow}%`
+      const precepitationChance = chanceOfRanin > chanceOfSnow ? `Вероятность дождя: ${chanceOfRanin}%` : `Вероятность выпадения снега: ${chanceOfSnow}%`
 
       const text =
         `Погода в *${u.city}* сейчас:\n` +
@@ -243,7 +244,7 @@ let randomPicsCache = { timestamp: 0, data: [] };
 const CACHE_TTL = 30_000; // 30 секунд
 
 // --- Универсальная функция fetch с таймаутом ---
-async function fetchWithTimeout(url, timeoutMs = 10000) {
+async function fetchWithTimeout(url, timeoutMs = 30000) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -259,7 +260,7 @@ async function fetchWithTimeout(url, timeoutMs = 10000) {
 app.get("/api/random-pic", async (req, res) => {
   const { descr } = req.query;
   if (!descr) return res.status(400).json({ error: "Описание (descr) обязательно" });
-  
+
   const now = Date.now();
   if (randomPicCache.data && now - randomPicCache.timestamp < CACHE_TTL) {
     return res.json(randomPicCache.data);
