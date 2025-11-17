@@ -95,8 +95,11 @@ const App = () => {
                          ]
                     })
                }
-     
-               localStorage.setItem("historyList", JSON.stringify(historyList));
+
+               const fromFav = JSON.parse(localStorage.getItem("fromFav") || "false");
+               
+               if(!fromFav) localStorage.setItem("historyList", JSON.stringify(historyList));
+               else localStorage.setItem("fromFav", JSON.stringify(false));
           
      
           }, [weatherData.name]);

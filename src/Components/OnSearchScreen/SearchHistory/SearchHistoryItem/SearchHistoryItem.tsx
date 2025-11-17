@@ -11,14 +11,24 @@ interface ISearchHistoryItemProps {
      setHistoryCahce: Dispatch<React.SetStateAction<string[]>>;
      setAddFavCity : Dispatch<React.SetStateAction<boolean>>;
      isEdit: boolean;
+     setCity: React.Dispatch<React.SetStateAction<string>>;
+     setIsSearch:  React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SearchHistoryItem = ({cityData, index, historyCahce, setHistoryCahce, isEdit, setAddFavCity}: ISearchHistoryItemProps) => {
+const SearchHistoryItem = ({cityData, index, historyCahce, setHistoryCahce, isEdit, setAddFavCity, setCity, setIsSearch}: ISearchHistoryItemProps) => {
 
+     function itemClickHandle() {
 
-     function btnFavHandle() {
+         if(!isEdit) {
+          setCity(cityData.city);
+          setIsSearch(false)
+         }
+     }
 
-  
+     function btnFavHandle(e: React.MouseEvent<HTMLButtonElement>) {
+          
+          e.stopPropagation();
+
           const favoriteCityArr = JSON.parse(localStorage.getItem("favCitiesList") || "[]");
 
           if(favoriteCityArr.length >= 5) return;
@@ -59,7 +69,7 @@ const SearchHistoryItem = ({cityData, index, historyCahce, setHistoryCahce, isEd
 
 
      return (
-               <div style={{borderBottom: index !== historyCahce.length - 1 ? "1px solid rgba(128, 128, 128, 0.2)" : ""}} className={styles.itemWrap}>
+               <div style={{borderBottom: index !== historyCahce.length - 1 ? "1px solid rgba(128, 128, 128, 0.2)" : ""}} className={styles.itemWrap} onClick={itemClickHandle}>
                     
                     <div className={styles.tiyleWtap}>
                          <img className={styles.locationImg} src='/assets/OnSearchScreen/location.png' loading='lazy' alt=''></img>

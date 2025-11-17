@@ -10,10 +10,12 @@ interface IFavoriteCitiesProps {
      setIsEdit: Dispatch<React.SetStateAction<boolean>>;
      isEdit: boolean;
      setAddFavCity: Dispatch<React.SetStateAction<boolean>>;
+     setIsSearch:  React.Dispatch<React.SetStateAction<boolean>>;
+     setCity: React.Dispatch<React.SetStateAction<string>>;
 }
 
 
-const FavoriteCities = ({addFavCity, setIsEdit, isEdit,  setAddFavCity}: IFavoriteCitiesProps) => {
+const FavoriteCities = ({addFavCity, setIsEdit, isEdit,  setAddFavCity, setIsSearch, setCity}: IFavoriteCitiesProps) => {
 
     // const [favCities, setFavCities] = useState<favCityArr[]>(favoriteCities);
 
@@ -153,14 +155,16 @@ const FavoriteCities = ({addFavCity, setIsEdit, isEdit,  setAddFavCity}: IFavori
                          </div>}
 
                          {favCitiesCahce.map((cityData, index) => <FavoriteCitiesItem
-                         cityData={cityData}
-                         key={cityData.city}
-                         index={index}
-                         isEdit={isEdit}
-                         moveItem={moveItem}
-                         favCitiesCahce={favCitiesCahce}
-                         // setFavCities={setFavCities}
-                         setAddFavCity={setAddFavCity} />)}
+                              cityData={cityData}
+                              key={cityData.city}
+                              index={index}
+                              isEdit={isEdit}
+                              moveItem={moveItem}
+                              favCitiesCahce={favCitiesCahce}
+                              setIsSearch={setIsSearch}
+                              setAddFavCity={setAddFavCity}
+                              setCity={setCity}
+                         />)}
                     </div>
                </div>
           </div>

@@ -25,8 +25,8 @@ const SeriesItem = ({weatherData, btnSelect, days, index}: ISeriesItemProps) => 
 
             refImg.current.style.cssText = `
             transform: rotate(${weatherData.daily.winddirection_10m_dominant[index]}deg);
-            width: 40px;
-            height: 40px;         
+            width: 38px;
+            height: 38px;         
             `;
 
           } else {

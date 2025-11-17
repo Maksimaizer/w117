@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as styles from "./OnSearchScreen.module.scss";
 import SearchHistory from './SearchHistory/SearchHistory';
-import FavoriteCities from '../FavoriteCities/FavoriteCities';
+import FavoriteCities from './FavoriteCities/FavoriteCities';
 import { historyArr } from '@/utils/HistoryArr';
 import { WeatherData } from '@/interfaces/weatherData';
 
@@ -87,14 +87,14 @@ const OnSearchScreen = ({setIsSearch, setCity, weatherData, addFavCity, setAddFa
                          </div>
 
                          <form className={styles.myForm} onSubmit={submitHandle}>
-                              <input value={value} onChange={(e) => setValue(e.target.value)} className={styles.myInput} placeholder='Поиск по городам'></input>
+                              <input className={styles.myInput} value={value} onChange={(e) => setValue(e.target.value)} placeholder='Поиск по городам'></input>
                          </form>
                     </div>
 
 
-                    <FavoriteCities addFavCity={addFavCity} setIsEdit={setIsEdit} isEdit={isEdit} setAddFavCity={setAddFavCity}/>
+                    <FavoriteCities addFavCity={addFavCity} setIsEdit={setIsEdit} isEdit={isEdit} setAddFavCity={setAddFavCity} setIsSearch={setIsSearch} setCity={setCity}/>
 
-                    <SearchHistory setAddFavCity={setAddFavCity} isEdit={isEdit} weatherData={weatherData}/>
+                    <SearchHistory setAddFavCity={setAddFavCity} isEdit={isEdit} weatherData={weatherData} setCity={setCity} setIsSearch={setIsSearch}/>
                </div>
           </div>
      );

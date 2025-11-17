@@ -48,6 +48,7 @@
     "highcharts": "^12.4.0",
     "highcharts-more": "^0.1.7",
     "highcharts-react-official": "^3.2.2",
+    "node-cron": "^4.2.1",
     "node-fetch": "^3.3.2",
     "node-telegram-bot-api": "^0.66.0",
     "react": "^19.1.0",

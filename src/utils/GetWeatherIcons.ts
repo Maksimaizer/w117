@@ -92,6 +92,10 @@ export const weatherIconsDay: Record<string, string> = {
   "61": "overcast-day-drizzle",
   "63": "overcast-day-drizzle",
   "80": "overcast-day-drizzle",
+
+  "66": "overcast-day-sleet",
+  "67": "overcast-day-sleet",
+
   "65": "rain",
   "81": "rain",
   "82": "rain",
@@ -123,6 +127,9 @@ export const weatherIconsNight: Record<string, string> = {
   "63": "overcast-night-drizzle",
   "80": "overcast-night-drizzle",
 
+  "66": "overcast-night-sleet",
+  "67": "overcast-night-sleet",
+
   "65": "rain",
   "81": "rain",
   "82": "rain",
@@ -150,6 +157,8 @@ const weatherDescription = {
      "80": "Дождь",
      "65": "Сильный дождь",
      "55": "Сильный дождь",
+     "66": "Снег с дождем",
+     "67": "Мокрый снег",
      "81": "Ливень",
      "82": "Сильный ливень",
      "45": "Туман",
@@ -175,6 +184,8 @@ const unsplashDescription = {
      "51": "Slight+Rain",
      "80": "Rain",
      "65": "Heavy+Rain",
+     "66": "Sleet",
+     "67": "Sleet",
      "55": "Heavy+Rain",
      "81": "Heavy+Rain",
      "82": "Heavy+Rain",

@@ -8,9 +8,11 @@ interface ISearchHistoryProps {
    setAddFavCity : Dispatch<React.SetStateAction<boolean>>;
    isEdit: boolean;
    weatherData: WeatherData;
+   setCity: React.Dispatch<React.SetStateAction<string>>;
+   setIsSearch:  React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SearchHistory = ({setAddFavCity, isEdit, weatherData}: ISearchHistoryProps) => {
+const SearchHistory = ({setAddFavCity, isEdit, weatherData, setCity, setIsSearch}: ISearchHistoryProps) => {
 
   //   const [searchHistortArr, setSearchHistoryArr] = useState(historyArr);
 
@@ -20,7 +22,6 @@ const SearchHistory = ({setAddFavCity, isEdit, weatherData}: ISearchHistoryProps
      useEffect(() => {
           const handleUpdate = () => {
           const historyList = JSON.parse(localStorage.getItem("historyList") || '[]');
-               console.log(historyList[0]?.city)
                setHistoryCahce(historyList);
           }
 
@@ -55,8 +56,18 @@ const SearchHistory = ({setAddFavCity, isEdit, weatherData}: ISearchHistoryProps
                               <div className={styles.searchPHText}>Пока пусто.</div>
                               <img src='/assets/OnSearchScreen/black-cat.png' className={styles.searchPHImg}></img>
                          </div>}
-                         {historyCahce.map((cityData, index) => <SearchHistoryItem historyCahce={historyCahce} setHistoryCahce={setHistoryCahce} setAddFavCity={setAddFavCity} isEdit={isEdit} key={index} index={index} cityData={cityData} />)}
-                         {/* {searchHistortArr.map((city, index) => <SearchHistoryItem searchHistortArr={searchHistortArr} setAddFavCity={setAddFavCity} isEdit={isEdit} key={index} index={index} city={city} />)} */}
+                         {historyCahce.map((cityData, index) => <SearchHistoryItem
+                              historyCahce={historyCahce}
+                              setHistoryCahce={setHistoryCahce}
+                              setAddFavCity={setAddFavCity}
+                              isEdit={isEdit}
+                              key={index}
+                              index={index}
+                              cityData={cityData}
+                              setCity={setCity}
+                              setIsSearch={setIsSearch}
+                         />)}
+                         
                          
                     </div>
               </div>

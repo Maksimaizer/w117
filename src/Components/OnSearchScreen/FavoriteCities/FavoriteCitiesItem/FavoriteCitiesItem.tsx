@@ -12,8 +12,9 @@ interface IFavoriteCitiesItemProps {
      index: number;
      moveItem: (index: number, direction: number) => void;
      favCitiesCahce: IfavCities[];
-     // setFavCities: Dispatch<React.SetStateAction<favCityArr[]>>;
+     setIsSearch:  React.Dispatch<React.SetStateAction<boolean>>;
      setAddFavCity: Dispatch<React.SetStateAction<boolean>>;
+     setCity: React.Dispatch<React.SetStateAction<string>>;
 }
 
 
@@ -24,7 +25,7 @@ export interface IfavDayForecast {
      day: string;
 }
 
-const FavoriteCitiesItem = ({cityData, isEdit, index, setAddFavCity, moveItem, favCitiesCahce}: IFavoriteCitiesItemProps) => {
+const FavoriteCitiesItem = ({cityData, isEdit, index, setAddFavCity, moveItem, favCitiesCahce, setIsSearch, setCity}: IFavoriteCitiesItemProps) => {
 
      // в JSX ставим opacity на кнопки сортировки 
      const firstBtn = index == 0;
@@ -34,12 +35,18 @@ const FavoriteCitiesItem = ({cityData, isEdit, index, setAddFavCity, moveItem, f
     // const [nextDaysArr, setNextDaysArr] = useState<IfavDayForecast[]>(cityData.forecast);
      const [time, setTime] = useState<string>("");
 
+
+     function itemClickHanlde() {
+          if(!isEdit) {
+               setCity(cityData.city);
+               setIsSearch(false);
+               localStorage.setItem("fromFav", JSON.stringify(true));
+          }
+     }
+
      function btnSortHandle(e: React.MouseEvent<HTMLButtonElement>) {
-
-     const direction = +e.currentTarget.dataset.direction;
-
-     moveItem(index, direction);
-
+          const direction = +e.currentTarget.dataset.direction;
+          moveItem(index, direction);
      }
 
 
@@ -109,7 +116,7 @@ const FavoriteCitiesItem = ({cityData, isEdit, index, setAddFavCity, moveItem, f
      return (
           <>
           {!isEdit && 
-          <div className={styles.container} style={{backgroundImage: `url(${cityData.backgroundImg})`}}>
+          <div className={styles.container} style={{backgroundImage: `url(${cityData.backgroundImg})`}} onClick={itemClickHanlde}>
                <div className={styles.fade}></div>
                <div className={styles.content}>
                
