@@ -102,16 +102,20 @@ bot.on("message", async (msg) => {
     return bot.sendMessage(chatId, "Город не найден.");
   }
 
-  const nowUTC = Math.floor(Date.now() / 1000);
-  const timezoneOffset = data.location.localtime_epoch - nowUTC;
+ const nowUTC = Math.floor(Date.now() / 1000);
+
+const timezoneOffsetRaw = data.location.localtime_epoch - nowUTC;
+
+// округляем до минут, чтобы избежать дробей
+const timezoneOffset = Math.round(timezoneOffsetRaw / 60) * 60;
 
   // ---- Конвертация пользовательского времени -> UTC ----
   // Время пользователя (локальное по городу) минус смещение
-  const totalMinutes = hours * 60 + minutes;
-  const utcMinutes = totalMinutes - timezoneOffset / 60;
+const totalMinutes = hours * 60 + minutes;
+const utcMinutes = totalMinutes - timezoneOffset / 60;
 
-  let utcH = Math.floor((utcMinutes / 60 + 24) % 24);
-  let utcM = ((utcMinutes % 60) + 60) % 60;
+let utcH = Math.floor((utcMinutes / 60 + 24) % 24);
+let utcM = Math.round(((utcMinutes % 60) + 60) % 60);
 
   // ---- Сохраняем в JSON ----
   const users = loadUsers();
