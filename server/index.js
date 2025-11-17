@@ -23,11 +23,21 @@ const bot = new TelegramApi(token, { polling: true });
 
 //=====================================================================
 // ---- Memory storage (имитация БД) ----
+// function loadUsers() {
+//   return JSON.parse(fs.readFileSync("users.json", "utf-8"));
+// }
+// function saveUsers(data) {
+//   fs.writeFileSync("users.json", JSON.stringify(data, null, 2));
+// }
+
+const usersFile = path.join(__dirname, "users.json");
+
 function loadUsers() {
-  return JSON.parse(fs.readFileSync("users.json", "utf-8"));
+  return JSON.parse(fs.readFileSync(usersFile, "utf-8"));
 }
+
 function saveUsers(data) {
-  fs.writeFileSync("users.json", JSON.stringify(data, null, 2));
+  fs.writeFileSync(usersFile, JSON.stringify(data, null, 2));
 }
 
 // ---- Диалог состояния ----
