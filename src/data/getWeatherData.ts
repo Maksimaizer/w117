@@ -1,6 +1,7 @@
 import { WeatherData } from "@/interfaces/weatherData";
 import { getUnsplashDescr } from "@/utils/GetWeatherIcons";
 
+const API_KEY_PICS = "jGVXPa7T2myGTpijz0Zd8GY6fypKYKAGhWv2D5hhxcs";
 
 export interface UnsplashPhoto {
     regularUrl: string;
@@ -28,8 +29,9 @@ async function getCachedWeekPics(): Promise<UnsplashPhoto[]> {
   }
 
   console.log("Загружаем новые фото...");
+  //await fetch(`/api/random-pics`);
   //await fetch(`https://api.unsplash.com/photos/random?count=14&query=macro+nature&orientation=portrait&client_id=${API_KEY_PICS}`);
-   const randomPicsArrResponse = await fetch(`/api/random-pics`);
+   const randomPicsArrResponse = await fetch(`https://api.unsplash.com/photos/random?count=14&query=macro+nature&orientation=portrait&client_id=${API_KEY_PICS}`);
    if (!randomPicsArrResponse.ok) {
           console.error("Ошибка сервера:", await randomPicsArrResponse.text());
           return [];
@@ -105,10 +107,10 @@ export async function getWeatherData(setWeatherData: (weatherData: WeatherData) 
         //  const dayOrNight = +forecastData.current.time.split("T")[1].slice(0, 2) < 6 && +forecastData.current.time.split("T")[1].slice(0, 2) > 18 ? "day" : "night";
           const unsplashDescr = getUnsplashDescr(forecastData.current.weather_code, forecastData.current.time);
 
-          // const randomPicResponse = await fetch(`https://api.unsplash.com/photos/random?query=${unsplashDescr}&orientation=portrait&client_id=${API_KEY_PICS}`);
-          // const randomPic = await randomPicResponse.json();
-          const randomPicResponse = await fetch(`/api/random-pic?descr=${unsplashDescr}`);
+          const randomPicResponse = await fetch(`https://api.unsplash.com/photos/random?query=${unsplashDescr}&orientation=portrait&client_id=${API_KEY_PICS}`);
           const randomPic = await randomPicResponse.json();
+          // const randomPicResponse = await fetch(`/api/random-pic?descr=${unsplashDescr}`);
+          // const randomPic = await randomPicResponse.json();
 
 
           console.log(forecastData.daily.weather_code);
