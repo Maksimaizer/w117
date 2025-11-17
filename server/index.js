@@ -108,7 +108,7 @@ const tz = data.location.tz_id;
 const utcDate = new Date();
 const localeDate = new Date(utcDate.toLocaleString("en-US", { timeZone: tz }));
 
-const timezoneOffset = (localeDate - utcDate) / 1000; // секунды
+const timezoneOffset = Math.round((localeDate - utcDate) / 1000); // секунды
 
 // ---- Конвертация пользовательского времени -> UTC ----
 const totalMinutes = hours * 60 + minutes;
@@ -164,18 +164,18 @@ cron.schedule("* * * * *", async () => {
 
       const chanceOfRanin = data.forecast.forecastday[0].day.daily_chance_of_rain;
       const chanceOfSnow = data.forecast.forecastday[0].day.daily_chance_of_snow;
-      const precepitationChance = chanceOfRanin > chanceOfSnow ? `Вероятность дождя: ${chanceOfRanin}%` : `Вероятность выпадения снега: ${chanceOfSnow}%`
+      const precepitationChance = chanceOfRanin >= chanceOfSnow ? `Вероятность дождя: *${chanceOfRanin}%*` : `Вероятность выпадения снега: *${chanceOfSnow}%*`
 
       const text =
-        `Погода в *${u.city}* сейчас:\n` +
-        `Температура: *${Math.trunc(data.current.temp_c)}°C*\n` +
-        `${data.current.condition.text}\n` +
+        `Погода в городе *${u.city}* сейчас:\n` +
+        `● Температура: *${Math.trunc(data.current.temp_c)}°C*\n` +
+        `● *${data.current.condition.text}*\n` +
         `\n` +
         `Погода сегодня:\n` +
-        `Температура max: ${Math.trunc(data.forecast.forecastday[0].day.maxtemp_c)}\n` +
-        `Температура min: ${Math.trunc(data.forecast.forecastday[0].day.mintemp_c)}\n` +
-        `Ветер: ${data.forecast.forecastday[0].day.maxwind_kph}км/ч\n` +
-        `${precepitationChance}`;
+        `● Максимум: *${Math.trunc(data.forecast.forecastday[0].day.maxtemp_c)}°C*\n` +
+        `● Минимум: *${Math.trunc(data.forecast.forecastday[0].day.mintemp_c)}°C*\n` +
+        `● Ветер: *${data.forecast.forecastday[0].day.maxwind_kph}км/ч*\n` +
+        `● ${precepitationChance}`;
 
       bot.sendMessage(u.chatId, text, { parse_mode: "Markdown" });
     }
