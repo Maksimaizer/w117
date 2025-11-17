@@ -193,14 +193,14 @@ cron.schedule("* * * * *", async () => {
 //====================================================================
 
 
-// // bot.on("message", async (msg) => {
-// //   const chatId = msg.chat.id;
-// //   const text = msg.text;
+// bot.on("message", async (msg) => {
+//   const chatId = msg.chat.id;
+//   const text = msg.text;
 
-// //   if (text === "/start") {
-// //     await bot.sendMessage(chatId, "Привет! Нажми кнопку, чтобы открыть приложение 👇", againOptions);
-// //   }
-// // });
+//   if (text === "/start") {
+//     await bot.sendMessage(chatId, "Привет! Нажми кнопку, чтобы открыть приложение 👇", againOptions);
+//   }
+// });
 
 // --- API ДЛЯ ФРОНТЕНДА ---
 app.get("/api/weather", async (req, res) => {
@@ -237,21 +237,41 @@ app.get("/api/forecast", async (req, res) => {
   }
 });
 
+// --- Локальный кеш ---
+let randomPicCache = { timestamp: 0, data: null };
+let randomPicsCache = { timestamp: 0, data: [] };
+const CACHE_TTL = 30_000; // 30 секунд
+
+// --- Универсальная функция fetch с таймаутом ---
+async function fetchWithTimeout(url, timeoutMs = 10000) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    return await response.json();
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+// --- Один рандомный пик ---
 app.get("/api/random-pic", async (req, res) => {
   const { descr } = req.query;
+  if (!descr) return res.status(400).json({ error: "Описание (descr) обязательно" });
 
-  if (!descr) {
-    return res.status(400).json({ error: "Описание (descr) обязательно" });
+  // Проверяем кеш
+  const now = Date.now();
+  if (randomPicCache.data && now - randomPicCache.timestamp < CACHE_TTL) {
+    return res.json(randomPicCache.data);
   }
 
   try {
     const apiKey = process.env.UNSPLASH_API_KEY;
-
     const url = `https://api.unsplash.com/photos/random?query=${encodeURIComponent(descr)}&orientation=portrait&client_id=${apiKey}`;
 
-    const response = await fetch(url);
-    const data = await response.json();
-
+    const data = await fetchWithTimeout(url);
+    randomPicCache = { timestamp: now, data };
     res.json(data);
   } catch (error) {
     console.error(error);
@@ -259,26 +279,70 @@ app.get("/api/random-pic", async (req, res) => {
   }
 });
 
+// --- 14 случайных фото ---
 app.get("/api/random-pics", async (req, res) => {
+  const now = Date.now();
+  if (randomPicsCache.data.length && now - randomPicsCache.timestamp < CACHE_TTL) {
+    return res.json(randomPicsCache.data);
+  }
+
   try {
     const apiKey = process.env.UNSPLASH_API_KEY;
-
     const url = `https://api.unsplash.com/photos/random?count=14&query=macro+nature&orientation=portrait&client_id=${apiKey}`;
 
-    const response = await fetch(url);
-    let data = await response.json();
+    let data = await fetchWithTimeout(url);
+    if (!Array.isArray(data)) data = [data];
 
-    // Если вернулся один объект, оборачиваем в массив
-    if (!Array.isArray(data)) {
-      data = [data];
-    }
-
+    randomPicsCache = { timestamp: now, data };
     res.json(data);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Ошибка получения списка фото" });
   }
 });
+
+// app.get("/api/random-pic", async (req, res) => {
+//   const { descr } = req.query;
+
+//   if (!descr) {
+//     return res.status(400).json({ error: "Описание (descr) обязательно" });
+//   }
+
+//   try {
+//     const apiKey = process.env.UNSPLASH_API_KEY;
+
+//     const url = `https://api.unsplash.com/photos/random?query=${encodeURIComponent(descr)}&orientation=portrait&client_id=${apiKey}`;
+
+//     const response = await fetch(url);
+//     const data = await response.json();
+
+//     res.json(data);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Ошибка получения изображения" });
+//   }
+// });
+
+// app.get("/api/random-pics", async (req, res) => {
+//   try {
+//     const apiKey = process.env.UNSPLASH_API_KEY;
+
+//     const url = `https://api.unsplash.com/photos/random?count=14&query=macro+nature&orientation=portrait&client_id=${apiKey}`;
+
+//     const response = await fetch(url);
+//     let data = await response.json();
+
+//     // Если вернулся один объект, оборачиваем в массив
+//     if (!Array.isArray(data)) {
+//       data = [data];
+//     }
+
+//     res.json(data);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Ошибка получения списка фото" });
+//   }
+// });
 
 
 // --- ЗАПУСК СЕРВЕРА ---
