@@ -102,7 +102,8 @@ bot.on("message", async (msg) => {
     return bot.sendMessage(chatId, "Город не найден.");
   }
 
- const nowUTC = Math.floor(Date.now() / 1000);
+//  const nowUTC = Math.floor(Date.now() / 1000);
+const nowUTC = Math.floor(new Date().getTime() / 1000 - new Date().getTimezoneOffset() * 60);
 
 const timezoneOffsetRaw = data.location.localtime_epoch - nowUTC;
 
