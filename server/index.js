@@ -103,13 +103,12 @@ bot.on("message", async (msg) => {
   }
 
 // UTC timestamp (секунды) — простая и правильная версия
-const nowUTC = Math.floor(Date.now() / 1000);
+const tz = data.location.tz_id;
 
-// разница (в секундах) между локальным временем города и текущим UTC
-const timezoneOffsetRaw = data.location.localtime_epoch - nowUTC;
+const utcDate = new Date();
+const localeDate = new Date(utcDate.toLocaleString("en-US", { timeZone: tz }));
 
-// округляем смещение до ближайшей минуты (в секундах)
-const timezoneOffset = Math.round(timezoneOffsetRaw / 60) * 60;
+const timezoneOffset = (localeDate - utcDate) / 1000; // секунды
 
 // ---- Конвертация пользовательского времени -> UTC ----
 const totalMinutes = hours * 60 + minutes;
