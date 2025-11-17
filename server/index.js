@@ -193,14 +193,14 @@ cron.schedule("* * * * *", async () => {
 //====================================================================
 
 
-bot.on("message", async (msg) => {
-  const chatId = msg.chat.id;
-  const text = msg.text;
+// // bot.on("message", async (msg) => {
+// //   const chatId = msg.chat.id;
+// //   const text = msg.text;
 
-  if (text === "/start") {
-    await bot.sendMessage(chatId, "Привет! Нажми кнопку, чтобы открыть приложение 👇", againOptions);
-  }
-});
+// //   if (text === "/start") {
+// //     await bot.sendMessage(chatId, "Привет! Нажми кнопку, чтобы открыть приложение 👇", againOptions);
+// //   }
+// // });
 
 // --- API ДЛЯ ФРОНТЕНДА ---
 app.get("/api/weather", async (req, res) => {
