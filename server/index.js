@@ -35,22 +35,22 @@ const bot = new TelegramApi(token, { polling: true });
 
 
 //  /start Команда
-const againOptions = {
-  reply_markup: JSON.stringify({
-    inline_keyboard: [
-      [{ text: "Запуск приложения", web_app: { url: webAppUrl } }]
-    ]
-  })
-};
+// const againOptions = {
+//   reply_markup: JSON.stringify({
+//     inline_keyboard: [
+//       [{ text: "Запуск приложения", web_app: { url: webAppUrl } }]
+//     ]
+//   })
+// };
 
 
-bot.onText(/\/start/, (msg) => {
-  const chatId = msg.chat.id;
+// bot.onText(/\/start/, (msg) => {
+//   const chatId = msg.chat.id;
 
-  bot.sendMessage(chatId, "Привет! Хочешь получать ежедневный прогноз погоды?\n" +
-    "Используй команду /setcity\n" +
-    "Или нажми кнопку, чтобы открыть приложение 👇", againOptions);
-});
+//   bot.sendMessage(chatId, "Привет! Хочешь получать ежедневный прогноз погоды?\n" +
+//     "Используй команду /setcity\n" +
+//     "Или нажми кнопку, чтобы открыть приложение 👇", againOptions);
+// });
 
 // // -------------------------------------
 // //  /setcity — пользователь начинает настройку
@@ -193,15 +193,23 @@ bot.onText(/\/start/, (msg) => {
 
 //====================================================================
 
+const againOptions = {
+  reply_markup: JSON.stringify({
+    inline_keyboard: [
+      [{ text: "Запуск приложения", web_app: { url: webAppUrl } }]
+    ]
+  })
+};
 
-// bot.on("message", async (msg) => {
-//   const chatId = msg.chat.id;
-//   const text = msg.text;
 
-//   if (text === "/start") {
-//     await bot.sendMessage(chatId, "Привет! Нажми кнопку, чтобы открыть приложение 👇", againOptions);
-//   }
-// });
+bot.on("message", async (msg) => {
+  const chatId = msg.chat.id;
+  const text = msg.text;
+
+  if (text === "/start") {
+    await bot.sendMessage(chatId, "Привет! Нажми кнопку, чтобы открыть приложение 👇", againOptions);
+  }
+});
 
 // --- API ДЛЯ ФРОНТЕНДА ---
 app.get("/api/weather", async (req, res) => {
