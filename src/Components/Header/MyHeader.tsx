@@ -9,10 +9,6 @@ interface IMyHeaderProps {
 }
 
 
-
-// src={'https://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png'} alt=''
-//weatherData.weather[0].description.charAt(0).toUpperCase() + weatherData.weather[0].description.slice(1)
-
 const MyHeader = ({headerRef, weatherData}: IMyHeaderProps) => {
 
      const [icon, setIcon] = useState("clear-day");
@@ -47,24 +43,6 @@ const MyHeader = ({headerRef, weatherData}: IMyHeaderProps) => {
 
      }, [weatherData]);
 
-     // useEffect(() => {
-     //      const cacheKey = "HeaderImg";
-     //      const cacheData = localStorage.getItem(cacheKey);
-
-     //      if(cacheData && !weatherData.timezone) {
-     //           const parsedPic = JSON.parse(cacheData);
-     //           setBgImg(parsedPic)
-     //      }
-
-     //      if(weatherData.timezone) {
-     //           localStorage.setItem(cacheKey, 
-     //           JSON.stringify(weatherData.imgBG.pic)
-     //           )
-     //           setBgImg(weatherData.imgBG.pic);
-     //      }
-
-
-     // }, [weatherData.timezone])
 
 
      return (

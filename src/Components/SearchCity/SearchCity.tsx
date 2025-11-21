@@ -1,4 +1,4 @@
-import { useRef, useEffect, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import * as styles from "./SearchCity.module.scss";
 import { WeatherData } from "@/interfaces/weatherData";
 import { IisWeekForecast } from "../App/App";

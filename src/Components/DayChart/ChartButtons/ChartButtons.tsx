@@ -49,10 +49,6 @@ const ChartButtons = ({setBtnSelect}: IChartButtonsProps) => {
                               <span>{textSpan}</span> 
                          </button>
                     ))}
-
-                    {/* <button className={styles.btnChart} onClick={btnHandle} data-title={"precipitarion"}>Осадки<span> мм</span></button>
-                    <button className={styles.btnChart} onClick={btnHandle} data-title={"wind"}>Ветер<span> m\s</span></button>
-                    <button className={styles.btnChart} onClick={btnHandle} data-title={"pressure"}>Давление<span> mmHg</span></button> */}
                </div>
           </div>
      );

@@ -1,7 +1,6 @@
 import React, { Dispatch, useEffect, useRef, useState } from 'react';
 import * as styles from "./WeekForecast.module.scss";
 import WeekForecastItem from './WeekForecastItem/WeekForecastItem';
-import { weekDaysChartArr } from '@/utils/FavoriteCities';
 import { IisWeekForecast } from '../App/App';
 import { WeatherData } from '@/interfaces/weatherData';
 import { getWeatherIconSvg } from '@/utils/GetWeatherIcons';
@@ -30,7 +29,6 @@ const WeekForecast = ({isWeekForecast, setIsWeekForecast, weatherData, days, sel
 
      function btnHandle() {
 
-       //   containerRef.current.style.transform = "translateX(100%)";
 
           setIsWeekForecast((prev) => {return {
                ...prev,
@@ -50,7 +48,6 @@ const WeekForecast = ({isWeekForecast, setIsWeekForecast, weatherData, days, sel
      useEffect(() => {
           if(!isWeekForecast.toShow) return;
 
-       //   containerRef.current.style.transform = "translateX(0%)"
           containerRef.current.scroll({
                top: scrollCoord,
                left: 0,
@@ -64,7 +61,7 @@ const WeekForecast = ({isWeekForecast, setIsWeekForecast, weatherData, days, sel
 
           const targetHours = ["00", "06", "12", "18"];
 
-          // Результат: массив из 14 элементов, где каждый — массив из 4 объектов
+          // массив из 14 элементов, где каждый — массив из 4 объектов
           const result = dailyDates.map(dayDate => {
           return hourly.time
                .map((t, i) => ({
@@ -87,7 +84,6 @@ const WeekForecast = ({isWeekForecast, setIsWeekForecast, weatherData, days, sel
 
           return result; // [[день1], [день2], [день3], ...]
      }
-// style={{transform: isWeekForecast.animation ? "" : "translateX(100%)"}}
      
      return (
           <div className={styles.container} ref={containerRef} style={{transform: isWeekForecast.animation ? "" : "translateX(100%)"}}>

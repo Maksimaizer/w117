@@ -1,6 +1,5 @@
 import React, { Dispatch, use, useEffect, useState } from 'react';
 import * as styles from './SearchHistory.module.scss';
-import { historyArr } from '@/utils/HistoryArr';
 import SearchHistoryItem from './SearchHistoryItem/SearchHistoryItem';
 import { WeatherData } from '@/interfaces/weatherData';
 
@@ -14,7 +13,6 @@ interface ISearchHistoryProps {
 
 const SearchHistory = ({setAddFavCity, isEdit, weatherData, setCity, setIsSearch}: ISearchHistoryProps) => {
 
-  //   const [searchHistortArr, setSearchHistoryArr] = useState(historyArr);
 
      const [historyCahce, setHistoryCahce] = useState([]);
 
@@ -34,12 +32,6 @@ const SearchHistory = ({setAddFavCity, isEdit, weatherData, setCity, setIsSearch
 
      }, [weatherData.name]);
 
-     // useEffect(() => {
-     //      const historyList = JSON.parse(localStorage.getItem("historyList") || '[]');
-     //           console.log(historyList[0]?.city)
-     //           setHistoryCahce(historyList);
-
-     // }, [weatherData.name]);
 
      return (
           <div className={styles.container}>
@@ -51,7 +43,6 @@ const SearchHistory = ({setAddFavCity, isEdit, weatherData, setCity, setIsSearch
                     </div>
 
                     <div className={styles.searchHistoryWrap}>
-                         {/* <div className={styles.searchHistoryItem}>Моздок</div> */}
                          {historyCahce.length == 0 && <div className={styles.searchPlaceHolder}>
                               <div className={styles.searchPHText}>Пока пусто.</div>
                               <img src='/assets/OnSearchScreen/black-cat.png' className={styles.searchPHImg}></img>

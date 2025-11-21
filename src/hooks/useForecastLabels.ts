@@ -6,7 +6,7 @@ export function useForecastLabels(dt: number, timezone: number) {
      const now = new Date((dt + timezone) * 1000);
 
    
-     // 🔹 Формат времени (12 часов вперёд)
+     //  Формат времени (12 часов вперёд)
      const timeFormatter = new Intl.DateTimeFormat("ru-RU", {
        hour: "2-digit",
        minute: "2-digit",
@@ -22,7 +22,7 @@ export function useForecastLabels(dt: number, timezone: number) {
        hours.push(timeFormatter.format(d));
      }
    
-     // 🔹 Формат дней (14 дней вперёд)
+     //  Формат дней (14 дней вперёд)
      const dayFormatter = new Intl.DateTimeFormat("ru-RU", {
        weekday: "short",
        day: "numeric",

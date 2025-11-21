@@ -1,7 +1,6 @@
 import React, { Dispatch, RefObject, SetStateAction, useEffect, useState } from 'react';
 import * as styles from "./DayChart.module.scss";
 import DayChartItem from './DayChartItem/DayChartItem';
-import { weekDaysChart, weekDaysChartArr } from '@/utils/FavoriteCities';
 import SeriesItem from './SeriesItem/SeriesItem';
 import ChartButtons from './ChartButtons/ChartButtons';
 import WindChartItem from './WindChartItem/WindChartItem';
@@ -31,7 +30,6 @@ interface IDayChartProps {
 
 const DayChart = ({days, weatherData, setSelectedIndex, setIsWeekForecast}: IDayChartProps) => {
 
-  const [weekDaysData, setWeekDaysData] = useState<weekDaysChart[]>(weekDaysChartArr);
 
   const [btnSelect, setBtnSelect] = useState<chartBtn>({
     precipitarion: true,
@@ -63,17 +61,9 @@ const DayChart = ({days, weatherData, setSelectedIndex, setIsWeekForecast}: IDay
   // конвертируем данные погоды в высоту столбца.
   function weatherDataToBarHeight(maxVaule: number, dataWeather: number): number {
           const percent = (dataWeather / maxVaule) * 100;
-          // barRef.current.style.height = Math.min(percent, 100) + "%" //обрезаем сверху
-
           return percent
   }
 
-  //   function weatherDataToBarHeight(maxVaule: number, dataWeather: number, barRef: RefObject<HTMLDivElement>) {
-  //         const percent = (dataWeather / maxVaule) * 100;
-  //         barRef.current.style.height = Math.min(percent, 100) + "%" //обрезаем сверху
-
-  //         console.log("000");
-  // }
 
   function dataToPercent(value: number, maxVaule: number, minValue: number): number {
      if (!Number.isFinite(value) || !Number.isFinite(maxVaule) || !Number.isFinite(minValue)) return 0;

@@ -23,12 +23,12 @@ const DayWeather = ({weatherData}: IDayWeatherProps) => {
                const localDate = new Date(nowUTC + weatherData.timezone * 1000);
 
                const formatter = new Intl.DateTimeFormat("ru-RU", {
-                    weekday: "short",   // день недели
-                    day: "numeric",    // число
-                    month: "short",     // месяц
-                    hour: "2-digit",   // часы
-                    minute: "2-digit", // минуты// секунды (можно убрать, если не надо)
-                    timeZone: "UTC"    // мы уже прибавили смещение, поэтому оставляем UTC
+                    weekday: "short",  
+                    day: "numeric",    
+                    month: "short",   
+                    hour: "2-digit",   
+                    minute: "2-digit", 
+                    timeZone: "UTC"    
                });
                
                const formatted = formatter.format(localDate);
@@ -52,7 +52,6 @@ const DayWeather = ({weatherData}: IDayWeatherProps) => {
          const weatherCode = getWeatherIconSvg(weatherData.daily.weather_code[0]);
          const weatherDescr = getWeatherDescr(weatherData.daily.weather_code[0]);
 
-        //  formatDate();
           setIcon(weatherCode);
           setDescription(weatherDescr);
      }, [weatherData]);

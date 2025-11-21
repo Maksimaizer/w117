@@ -1,6 +1,5 @@
 import React, { RefObject, useEffect, useRef } from 'react';
 import * as styles from "./WindChartitem.module.scss";
-import { weekDaysChart } from '@/utils/FavoriteCities';
 import { WeatherData } from '@/interfaces/weatherData';
 
 interface IWindChartItem {

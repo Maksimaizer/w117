@@ -1,7 +1,5 @@
 import React, { Dispatch, useEffect, useRef } from 'react';
 import * as styles from './SearchHistoryItem.module.scss';
-import { favoriteCities } from '@/utils/FavoriteCities';
-import { historyArr } from '@/utils/HistoryArr';
 import { getWeatherForFavoriteList } from '@/data/getWeatherFavList';
 
 interface ISearchHistoryItemProps {

@@ -11,7 +11,6 @@ interface ICurrentWeatherProps {
 
 const CurrentWeather = ({weatherData}: ICurrentWeatherProps) => {
 
-    // const [currentWeatherData, setCurrentWeatherData] = useState<WeatherItem[]>(currentWeatherDataArr);
      const {currentWeatherData} = useCurrentWeather(weatherData);
 
      return (

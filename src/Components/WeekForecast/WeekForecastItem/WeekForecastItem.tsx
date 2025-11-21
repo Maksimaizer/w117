@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as styles from "./WeekForecastItem.module.scss";
-import { weekDaysChart } from '@/utils/FavoriteCities';
 import { WeatherData } from '@/interfaces/weatherData';
 import { getWeatherDescr } from '@/utils/GetWeatherIcons';
 import { HourForecast } from '../WeekForecast';
@@ -32,12 +31,8 @@ const WeekForecastItem = ({weatherData, days, hourTempData, index, containerRef,
      useEffect(() => {
      if(selectedIndex == 0) return;
      if (selectedIndex === index && itemRef.current) {
-               // itemRef.current.scrollIntoView({
-               // behavior: "smooth",
-               // block: "center",
-               // });
-        const itemCoords =  itemRef.current.getBoundingClientRect();
 
+        const itemCoords =  itemRef.current.getBoundingClientRect();
         setScrollCoord(itemCoords.top);
     }
      }, [selectedIndex, index])

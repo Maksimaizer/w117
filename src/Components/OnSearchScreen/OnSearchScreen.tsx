@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import * as styles from "./OnSearchScreen.module.scss";
 import SearchHistory from './SearchHistory/SearchHistory';
 import FavoriteCities from './FavoriteCities/FavoriteCities';
-import { historyArr } from '@/utils/HistoryArr';
 import { WeatherData } from '@/interfaces/weatherData';
 
 
@@ -18,9 +17,6 @@ const OnSearchScreen = ({setIsSearch, setCity, weatherData, addFavCity, setAddFa
 
      const [value, setValue] = useState('');
 
-     //триггер на добавление города из истории в избранные. 
-     // const [addFavCity, setAddFavCity] = useState(false);
-     // const [FavDelToggle, setFavDelToggle] = useState(false);
 
      const [isEdit, setIsEdit] = useState(false);
 
@@ -50,31 +46,6 @@ const OnSearchScreen = ({setIsSearch, setCity, weatherData, addFavCity, setAddFa
           setValue("");
 }
 
-     // useEffect(() => {
-     //      if(!weatherData.name) return;
-
-     //      localStorage.setItem("cityCache", JSON.stringify(weatherData.name));
-
-     //      const historyList = JSON.parse(localStorage.getItem("historyList") || '[]');
-     //      const existingCity = historyList.find((item: any) => item.city === weatherData.name);
-     //      if(!existingCity) {
-     //           historyList.push({
-     //                city: weatherData.name,
-     //                temprerature: 0,
-     //                date: 0,
-     //                timeZone: 0,
-     //                backgroundImg: "",
-     //                forecast: [
-     //                     {maxTemp: 0, minTemp: 0},
-     //                     {maxTemp: 0, minTemp: 0}
-     //                ]
-     //           })
-     //      }
-
-     //   //   if(!historyArr.includes(value)) historyArr.push(value);
-     //      localStorage.setItem("historyList", JSON.stringify(historyList));
-
-     // }, [weatherData.name]);
 
      return (
           <div className={styles.container}>

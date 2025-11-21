@@ -29,8 +29,7 @@ async function getCachedWeekPics(): Promise<UnsplashPhoto[]> {
   }
 
   console.log("Загружаем новые фото...");
-  //await fetch(`/api/random-pics`);
-  //await fetch(`https://api.unsplash.com/photos/random?count=14&query=macro+nature&orientation=portrait&client_id=${API_KEY_PICS}`);
+
    const randomPicsArrResponse = await fetch(`https://api.unsplash.com/photos/random?count=14&query=macro+nature&orientation=portrait&client_id=${API_KEY_PICS}`);
    if (!randomPicsArrResponse.ok) {
           console.error("Ошибка сервера:", await randomPicsArrResponse.text());
@@ -56,27 +55,6 @@ async function getCachedWeekPics(): Promise<UnsplashPhoto[]> {
   return randomPicsUrls;
 }
 
-// function setCityCache(city: string) {
-
-//      const cacheKey = "cityCache";
-//      // const cacheCityData = localStorage.getItem(cacheKey);
-
-//      // if(cacheCityData) {
-//      //      const cachedCity = JSON.parse(cacheCityData);
-
-//      //      if(cachedCity == city) {
-//      //           return cachedCity;
-//      //      }
-//      // }
-
-//      localStorage.setItem("cityCache", JSON.stringify(city));
-
-//      // const cacheCityData = localStorage.getItem(cacheKey);
-//      // const cachedCity = JSON.parse(cacheCityData);
-
-//      return city;
-
-// }
 
 function unsplashDescrTime(time: string): string {
      const hour = +time.split("T")[1].slice(0, 2);
@@ -88,60 +66,30 @@ function unsplashDescrTime(time: string): string {
 }
 
 
-// https://api.open-meteo.com/v1/forecast?latitude=55.7522&longitude=37.6156&daily=temperature_2m_max,temperature_2m_min,wind_speed_10m_max,weather_code,precipitation_sum,winddirection_10m_dominant,apparent_temperature_max,apparent_temperature_min,pressure_msl_mean&hourly=temperature_2m,weather_code,precipitation,wind_speed_10m&current=temperature_2m,apparent_temperature,weather_code,cloud_cover,wind_speed_10m,pressure_msl&timezone=auto&forecast_days=14&timeformat=unixtime&wind_speed_unit=ms
+
 export async function getWeatherData(setWeatherData: (weatherData: WeatherData) => void, city: string): Promise<void | null> {
 
      try {
-         // fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=ru&appid=${API_KEY}&units=metric`);
-        // fetch(`/api/weather?city=${city}`);
+
      
           const cityResponse = await fetch(`/api/weather?city=${city}`);
           const cityData = await cityResponse.json();
 
-          // const forecastResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${cityData.coord.lat}&longitude=${cityData.coord.lon}&daily=temperature_2m_max,temperature_2m_min,wind_speed_10m_max,weather_code,precipitation_sum,winddirection_10m_dominant,apparent_temperature_max,apparent_temperature_min,pressure_msl_mean&hourly=temperature_2m,weather_code,precipitation,wind_speed_10m&current=temperature_2m,apparent_temperature,weather_code,cloud_cover,wind_speed_10m,pressure_msl,relative_humidity_2m&timezone=auto&forecast_days=14&wind_speed_unit=ms`);
-          // const forecastData = await forecastResponse.json();
           const forecastResponse = await fetch(`/api/forecast?lat=${cityData.coord.lat}&lon=${cityData.coord.lon}`);
           const forecastData = await forecastResponse.json();
 
 
-        //  const dayOrNight = +forecastData.current.time.split("T")[1].slice(0, 2) < 6 && +forecastData.current.time.split("T")[1].slice(0, 2) > 18 ? "day" : "night";
+ 
           const unsplashDescr = getUnsplashDescr(forecastData.current.weather_code, forecastData.current.time);
 
           const randomPicResponse = await fetch(`https://api.unsplash.com/photos/random?query=${unsplashDescr}&orientation=portrait&client_id=${API_KEY_PICS}`);
           const randomPic = await randomPicResponse.json();
-          // const randomPicResponse = await fetch(`/api/random-pic?descr=${unsplashDescr}`);
-          // const randomPic = await randomPicResponse.json();
+
 
 
           console.log(forecastData.daily.weather_code);
 
           const randomPicsUrls =  await getCachedWeekPics();
-
-
-          // const randomPicsArrResponse = await fetch(`https://api.unsplash.com/photos/random?count=14&query=macro+nature&orientation=portrait&client_id=${API_KEY_PICS}`);
-          // const randomPicsArr: UnsplashPhoto[] = await randomPicsArrResponse.json();
-
-          // const randomPicsUrls = randomPicsArr.map((data) => data.urls.regular);
-
-          // randomPicsUrls.forEach((url) => {
-          //      const img = new Image();
-          //      img.src = url;
-          // });
-
-
-          // const weekPicsArr = [];
-
-          // for(let i = 0; i < forecastData.daily.time.length; i++) {
-          //  const description = getUnsplashDescr(forecastData.daily.weather_code[i]);
-          
-          //  const randomWeekPicResponse = await fetch(`https://api.unsplash.com/photos/random?query=${description}&orientation=portrait&client_id=${API_KEY_PICS}`);
-          //  const randomWeekPic = await randomWeekPicResponse.json();
-
-          //  weekPicsArr.push({
-          //      weekPic: randomWeekPic.urls.full,
-          //      username: randomWeekPic.user.username
-          //  })
-          // }
 
           
           setWeatherData({

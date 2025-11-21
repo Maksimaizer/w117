@@ -43,17 +43,6 @@ export function usePapallax() {
                     };
                }, []);
      
-           //отображаем background на container SearchCity при прокрутке
-               // function stickSearchBG(scrollTop: number) {
-
-               //      if(scrollTop >= 750 && checkBG == false) {
-               //           searchBgRef.current.style.backgroundImage = 'url("/assets/Day.jpg")';
-               //           setCheckBG(true);
-               //      } else if(scrollTop <= 750 && checkBG == true) {
-               //           searchBgRef.current.style.backgroundImage = ""
-               //           setCheckBG(false);
-               //      } 
-               // }
      
                const updateParallax = () => {
                     const container = containerRef.current;
@@ -62,7 +51,6 @@ export function usePapallax() {
                     headerRef.current.style.backgroundPositionY = `${scrollTop * 0.5}px`; 
                     // 0.5 — коэффициент параллакса (меньше = медленнее фон)
      
-                    // stickSearchBG(scrollTop);
      
                     ticking.current = false;
                

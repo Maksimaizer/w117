@@ -1,8 +1,6 @@
-import React, { Dispatch, useEffect,  useLayoutEffect,  useRef,  useState } from 'react';
+import React, { Dispatch, useEffect, useRef,  useState } from 'react';
 import * as styles from './FavoriteCitiesItem.module.scss';
 import NextDayitem from './NextDayItem/NextDayitem';
-import { favCityArr, favoriteCities, weekDaysWeather, weekDaysWeatherArr } from '@/utils/FavoriteCities';
-import { historyArr } from '@/utils/HistoryArr';
 import { IfavCities } from '@/data/getWeatherFavList';
 
 
@@ -27,12 +25,9 @@ export interface IfavDayForecast {
 
 const FavoriteCitiesItem = ({cityData, isEdit, index, setAddFavCity, moveItem, favCitiesCahce, setIsSearch, setCity}: IFavoriteCitiesItemProps) => {
 
-     // в JSX ставим opacity на кнопки сортировки 
      const firstBtn = index == 0;
      const lastBtn = favCitiesCahce.length - 1 == index;
      
-    // const [icon, setIcon] = useState("/assets/svg/clear-day.svg");
-    // const [nextDaysArr, setNextDaysArr] = useState<IfavDayForecast[]>(cityData.forecast);
      const [time, setTime] = useState<string>("");
 
 
@@ -51,7 +46,6 @@ const FavoriteCitiesItem = ({cityData, isEdit, index, setAddFavCity, moveItem, f
 
 
      function deleteBtnHandle() {
-         // favoriteCities.splice(index, 1);
           
           const favoriteCityArr = JSON.parse(localStorage.getItem("favCitiesList") || "[]");
           const historyList = JSON.parse(localStorage.getItem("historyList") || '[]');
@@ -79,8 +73,6 @@ const FavoriteCitiesItem = ({cityData, isEdit, index, setAddFavCity, moveItem, f
 
           window.dispatchEvent(new Event("favCitiesUpdated"));
 
-
-        //  setFavCities([...favoriteCities]);
           setAddFavCity(prev => !prev);
      
      }
@@ -93,9 +85,9 @@ const FavoriteCitiesItem = ({cityData, isEdit, index, setAddFavCity, moveItem, f
                     const localDate = new Date(nowUTC + cityData.timezone * 1000);
      
                     const formatter = new Intl.DateTimeFormat("ru-RU", {
-                         hour: "2-digit",   // часы
-                         minute: "2-digit", // минуты// секунды (можно убрать, если не надо)
-                         timeZone: "UTC"    // мы уже прибавили смещение, поэтому оставляем UTC
+                         hour: "2-digit",  
+                         minute: "2-digit", 
+                         timeZone: "UTC"    
                     });
                     
                     const formatted = formatter.format(localDate);

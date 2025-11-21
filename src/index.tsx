@@ -8,7 +8,5 @@ const container = createRoot(root);
 
 
 container.render(
-
           <App />
-
 )

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import * as styles from "./SeriesItem.module.scss";
-import { weekDaysChart } from '@/utils/FavoriteCities';
 import { chartBtn } from '../DayChart';
 import { WeatherData } from '@/interfaces/weatherData';
 import { getWeatherIconSvg } from '@/utils/GetWeatherIcons';
@@ -21,8 +20,6 @@ const SeriesItem = ({weatherData, btnSelect, days, index}: ISeriesItemProps) => 
           if(btnSelect.wind) {
 
             refImg.current.src = "/assets/ChartIcons/UpArrow.png";
-          //  refImg.current.style.transform = `rotate(${weatherData.daily.winddirection_10m_dominant[index]}deg)`;
-
             refImg.current.style.cssText = `
             transform: rotate(${weatherData.daily.winddirection_10m_dominant[index]}deg);
             width: 38px;

@@ -35,8 +35,7 @@ export async function getWeatherForFavoriteList() {
           const lastCityName = favList[favList.length - 1]?.city;
           if (!lastCityName) return;
 
-          // await fetch(`/api/weather?city=${lastCityName}`);
-          // Получаем координаты
+
           const coordsResponse = await fetch(`/api/weather?city=${lastCityName}`);
           const coords = await coordsResponse.json();
 
@@ -75,17 +74,15 @@ export async function getWeatherForFavoriteList() {
                ]
           };
 
-          // Создаем новый список (без мутаций)
+
           const updatedList = [...favList.slice(0, -1), weatherData];
 
-        //  setFavCitiesCahce(updatedList);
+
           localStorage.setItem("favCitiesList", JSON.stringify(updatedList));
 
           window.dispatchEvent(new Event("favCitiesUpdated"));
 
-          console.log("test");
 
-       //   return updatedList;
 }
 
 export async function updateAllFavoriteCitiesIfOld() {
@@ -111,10 +108,8 @@ export async function updateAllFavoriteCitiesIfOld() {
 
   for (const item of favList) {
     try {
-      console.log(`⏳ Обновляем город: ${item.city}`);
+      console.log(` Обновляем город: ${item.city}`);
 
-      // await fetch(`/api/weather?city=${item.city}`);
-      // Получаем координаты
       const coordsResponse =await fetch(`/api/weather?city=${item.city}`);
       
       const coords = await coordsResponse.json();
@@ -159,7 +154,7 @@ export async function updateAllFavoriteCitiesIfOld() {
       // Делаем паузу 400 мс перед следующим городом
       await delay(400);
     } catch (err) {
-      console.error(`❌ Ошибка при обновлении ${item.city}:`, err);
+      console.error(`Ошибка при обновлении ${item.city}:`, err);
       updatedList.push(item); // Сохраняем старые данные
     }
   }
@@ -168,7 +163,7 @@ export async function updateAllFavoriteCitiesIfOld() {
   localStorage.setItem("favCitiesList", JSON.stringify(updatedList));
   localStorage.setItem("favCitiesLastUpdate", String(now));
 
-  console.log("✅ Список городов обновлён и сохранён");
+  console.log("Список городов обновлён и сохранён");
 
   return updatedList;
 }

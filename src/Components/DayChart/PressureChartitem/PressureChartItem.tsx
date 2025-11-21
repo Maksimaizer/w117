@@ -1,6 +1,5 @@
 import React, { RefObject, useEffect, useRef } from 'react';
 import * as styles from "./PressureChartItem.module.scss";
-import { weekDaysChart } from '@/utils/FavoriteCities';
 import { weekData } from '../DayChart';
 import { WeatherData } from '@/interfaces/weatherData';
 
@@ -18,7 +17,6 @@ const PressureChartItem = ({weatherData, index, minAndMaxWeekData, dataToPercent
      const pressueMmHg = weatherData.daily.pressure_msl_mean[index] / 1.333;
 
      function setPressureBarHeight() {
-       //   const pressueMmHg = weatherData.daily.surface_pressure_mean[index] / 1.333;
          let percent = dataToPercent(pressueMmHg, minAndMaxWeekData.maxPressure, minAndMaxWeekData.minPressure);
 
           if(pressueMmHg === minAndMaxWeekData.minPressure) {

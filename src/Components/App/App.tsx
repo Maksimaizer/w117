@@ -15,7 +15,7 @@ import { useWeatherData } from '@/hooks/useWeatherData';
 import { getWeatherData } from '@/data/getWeatherData';
 import { useForecastLabels } from '@/hooks/useForecastLabels';
 import { preloadIcons } from '@/utils/GetWeatherIcons';
-import { getWeatherForFavoriteList, updateAllFavoriteCitiesIfOld } from '@/data/getWeatherFavList';
+import { updateAllFavoriteCitiesIfOld } from '@/data/getWeatherFavList';
 
 export interface IisWeekForecast {
      toShow: boolean;
@@ -34,7 +34,7 @@ const App = () => {
      const {weatherData, setWeatherData} = useWeatherData();
      const [city, setCity] = useState("");
 
-     const {hours, days, currentTime} = useForecastLabels(weatherData.dt, weatherData.timezone);
+     const {hours, days} = useForecastLabels(weatherData.dt, weatherData.timezone);
 
      const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -51,7 +51,6 @@ const App = () => {
 
      useEffect(() => {
           preloadIcons();
-         // localStorage.removeItem("favCitiesList");
      }, [])
 
      useEffect(() => {

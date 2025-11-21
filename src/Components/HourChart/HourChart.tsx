@@ -4,7 +4,6 @@ import * as styles from "./HourChart.module.scss";
 
 import Highcharts, { chart, color, offset } from 'highcharts'
 import HighchartsReact from 'highcharts-react-official';
-import { hourWeatherIconArr } from '@/utils/FavoriteCities';
 import { WeatherData } from '@/interfaces/weatherData';
 import { getWeatherIconSvg } from '@/utils/GetWeatherIcons';
 
@@ -25,17 +24,12 @@ const HourChart = ({hours, weatherData}: IHourChartProps) => {
 
 
      useEffect(() => {
-       //  const codeArr = getWeatherIconArr(weatherData.hourly.weather_code, +hours[0].slice(0, 2));
-
           let icon = ""
           const iconsArr = [];
-        //  const timeOffset = +hours[0].slice(0, 2);
 
           for(let i = 0; i <= 11; i++) {
 
-               icon = getWeatherIconSvg(weatherData.hourly.weather_code[timeOffset + i], weatherData.hourly.time[timeOffset + i]);
-
-               
+               icon = getWeatherIconSvg(weatherData.hourly.weather_code[timeOffset + i], weatherData.hourly.time[timeOffset + i]); 
                iconsArr.push(icon);
           }          
 
@@ -72,7 +66,7 @@ const HourChart = ({hours, weatherData}: IHourChartProps) => {
                          [1, 'rgba(255, 165, 0, 0)'] 
                     ]
                     },
-                    fillOpacity: 0.75, // Adjust opacity as needed
+                    fillOpacity: 0.75, 
 
                     dataLabels: {
                          enabled: true,
@@ -100,7 +94,6 @@ const HourChart = ({hours, weatherData}: IHourChartProps) => {
                          },
                     useHTML: true, // обязательно для вставки <img>
                     formatter: function () {
-                       //  const hourData = hourWeatherIconArr[this.pos];
                          return `
                          <div style="display:flex;flex-direction:column;align-items:center;justify-content: center;">
                               <img src=${hourIcons.length == 0 ? "/assets/svg/clear-day.svg" : `/assets/svg/${hourIcons[this.pos]}.svg`} loading='lazy' style="margin-top: -10px" width="45" height="45"/>
